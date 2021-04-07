@@ -928,8 +928,10 @@ class _TabBarDemoState extends State<TabBarDemo> {
                                     color: Colors.white)),
                           ]),
                     ),
+                     //////////////////Container for Complete Courses////////////////////////////
+                     ///All the classes that are being added will show up here
                     Container(
-                                      //The THIRD CONTAINER FOR  COURSES
+                                      
                         decoration: BoxDecoration(color: Color(0xff65646a)),
                         child: FutureBuilder(
                           future: _getStudentCourses(),
@@ -1451,7 +1453,7 @@ Future<int> delCourse() async {
       "This is the response status code for delCourse() = ${response.statusCode}");
   return response.statusCode;
 }
-
+//gets all the info to add class to the complete tab
 class Course {
   final int courseID;
   final String courseDept;
@@ -1465,10 +1467,11 @@ class Course {
   Course(this.courseID, this.courseDept, this.courseNum, this.name,
       this.institution, this.grade, this.semester);
 }
-
+//gets the student courses
 Future<List<Course>> _getStudentCourses() async {
   String studentId;
   studentId = await storage.read(key: "studentId");
+  //this request is on the api side of the app
   var response = await http.get("$address/CompleteCourses?Email=$studentId",
       headers: {
         HttpHeaders.authorizationHeader:
