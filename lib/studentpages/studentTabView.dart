@@ -27,6 +27,7 @@ class _TabBarDemoState extends State<TabBarDemo> {
     double deviceWidth = 2;
     double deviceHeight = 5;
     return MaterialApp(
+      
       home: DefaultTabController(
         length: 3,
         child: Scaffold(
@@ -46,6 +47,7 @@ class _TabBarDemoState extends State<TabBarDemo> {
               ],
             ),
             title: Text('Degree Audit'),
+            
           ),
           body: TabBarView(
             children: [
@@ -229,6 +231,8 @@ class _TabBarDemoState extends State<TabBarDemo> {
                   Tab(child: Text('CS Elect')),
                   Tab(child: Text('General Core')),
                   Tab(child: Text('Supported Courses')),
+                  Tab(child: Text('Complete Courses')),
+                  Tab(child: Text('Planned Courses'))
                 ],
                 contents: <Widget>[
                   ListView(children: [
@@ -908,6 +912,128 @@ class _TabBarDemoState extends State<TabBarDemo> {
                       ),
                     ),
                   ]),
+                  ListView(children: [
+                    RichText(
+                      text: TextSpan(
+                          style: TextStyle(
+                              //color: Color(0xffcf4411),
+                              fontWeight: FontWeight.bold,
+                              height: deviceHeight * 0.3,
+                              fontSize: deviceHeight * 1.8),
+                          children: <TextSpan>[
+                            TextSpan(
+                                text: "Completed Courses",
+                                style: TextStyle(
+                                    //fontWeight: FontWeight.bold,
+                                    color: Colors.white)),
+                          ]),
+                    ),
+                    Container(
+                                      //The THIRD CONTAINER FOR  COURSES
+                        decoration: BoxDecoration(color: Color(0xff65646a)),
+                        child: FutureBuilder(
+                          future: _getStudentCourses(),
+                          builder: (BuildContext context, AsyncSnapshot snapshot) {
+                            if (snapshot.data == null) {
+                              print("snapshot is null :O");
+                              return new Scaffold(
+                                backgroundColor: Color(0xff65646a),
+                                body: new Center(
+                                  child: new Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: <Widget>[
+                                      Image.asset("assets/images/image0.png"),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            } else {
+                              print("snapshot is not null");
+                              return Container(
+                                width: deviceWidth * 100,
+                                height: deviceHeight * 135,
+                                child: Row(
+                                  children: <Widget>[
+                                    Container(
+                                      margin: EdgeInsets.fromLTRB(deviceWidth * 1,
+                                          deviceHeight * 1, deviceWidth * 1, deviceHeight * 1),
+                                      //color: Color(0xffebebe8),
+                                      width: deviceWidth * 127,
+                                      height: deviceHeight * 135,
+                                      decoration: BoxDecoration(
+                                        gradient: LinearGradient(
+                                            colors: [Color(0xffebebe8), Color(0xffebebe8)]),
+                                        borderRadius: BorderRadius.circular(6.0),
+                                      ),
+                                      child: ListView.builder(
+                                        itemCount: snapshot.data.length,
+                                        itemBuilder: (BuildContext context, int i) {
+                                          return RichText(
+                                            text: TextSpan(
+                                                style: TextStyle(
+                                                    color: Color(0xffcf4411),
+                                                    fontWeight: FontWeight.bold,
+                                                    height: deviceHeight * 0.2,
+                                                    fontSize: deviceHeight * 2.28),
+                                                children: <TextSpan>[
+                                                  TextSpan(
+                                                    text:  "${snapshot.data[i].courseDept} ",
+                                                    style: TextStyle(
+                                                        color: Colors.black.withOpacity(0.7)),
+                                                  ),
+                                                  TextSpan(
+                                                    text:  "${snapshot.data[i].courseNum}",
+                                                    style: TextStyle(
+                                                        color: Colors.black.withOpacity(0.7)),
+                                                  ),
+                                                  TextSpan(
+                                                    text:  "\n${snapshot.data[i].name}",
+                                                    style: TextStyle(
+                                                        color: Colors.black.withOpacity(0.5)),
+                                                  ),
+                                                  TextSpan(
+                                                    text:  "\n Grade: ${snapshot.data[i].grade}  Semester: ${snapshot.data[i].semester}",
+                                                    style: TextStyle(
+                                                        color: Colors.black.withOpacity(1.0)),
+                                                  ),
+                                                  TextSpan(
+                                                    text:  "\n",
+                                                    style: TextStyle(
+                                                        color: Colors.black.withOpacity(1.0)),
+                                                  ),
+                                                ]),
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            }
+                          },
+                        ),
+                    )
+                  ]),
+                  ListView(children: [
+                    RichText(
+                      text: TextSpan(
+                          style: TextStyle(
+                              //color: Color(0xffcf4411),
+                              fontWeight: FontWeight.bold,
+                              height: deviceHeight * 0.3,
+                              fontSize: deviceHeight * 1.8),
+                          children: <TextSpan>[
+                            TextSpan(
+                                text: "Planned Courses",
+                                style: TextStyle(
+                                    //fontWeight: FontWeight.bold,
+                                    color: Colors.white)),
+                          ]),
+                    ),
+                    
+                    
+                  ]),
                 ],
               ),
               //],
@@ -1095,6 +1221,7 @@ class EditPopUpState extends State<EditPopUp>
     String dropdownValueForGrade = 'A';
     String dropDownValueForSemester = "Fall";
     String newValueForGrade = 'null';
+    String dropdownValueForCompleteness ='Incomplete';
     return Center(
       child: Material(
         color: Colors.transparent,
@@ -1102,7 +1229,7 @@ class EditPopUpState extends State<EditPopUp>
           scale: scaleAnimation,
           child: Container(
             width: deviceWidth * 95,
-            height: deviceHeight * 40,
+            height: deviceHeight * 50,
             decoration: ShapeDecoration(
                 color: Colors.white,
                 shape: RoundedRectangleBorder(
@@ -1120,6 +1247,7 @@ class EditPopUpState extends State<EditPopUp>
                       TextSpan(
                         text: 'Letter Grade:',
                         style: TextStyle(color: Colors.black.withOpacity(0.5)),
+                        
                       )
                     ],
                   ),
@@ -1177,6 +1305,43 @@ class EditPopUpState extends State<EditPopUp>
                     });
                   },
                   items: <String>['Fall', 'Spring', 'Summer I', 'Summer II']
+                      .map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                ),
+                RichText(
+                  text: TextSpan(
+                    style: TextStyle(
+                        color: Color(0xffcf4411),
+                        fontWeight: FontWeight.bold,
+                        height: deviceHeight * 0.2,
+                        fontSize: deviceHeight * 2.28),
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: 'Status:',
+                        style: TextStyle(color: Colors.black.withOpacity(0.5)),
+                      )
+                    ],
+                  ),
+                ),
+                DropdownButton<String>(
+                  value: dropdownValueForCompleteness,
+                  icon: Icon(Icons.arrow_downward),
+                  iconSize: 24,
+                  elevation: 16,
+                  style: TextStyle(color: Colors.black),
+                  onChanged: (newValueForCompleteness) {
+                    setState(() async {
+                      dropdownValueForCompleteness = newValueForCompleteness;
+                      await storage.write(
+                          key: "CourseCompleteness", value: "$newValueForCompleteness");
+                      print(await storage.read(key: "CourseCompleteness"));
+                    });
+                  },
+                  items: <String>['Complete', 'Incomplete']
                       .map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
@@ -1263,13 +1428,13 @@ class EditPopUpState extends State<EditPopUp>
 
 Future<int> addCourse() async {
   var response = await http.post(
-      "$address/selfadd/StudentCourses?Semester=${await storage.read(key: "CourseSemester")}&Grade=${await storage.read(key: "CourseGrade")}&CourseName=${await storage.read(key: "CourseName")}",
+      "$address/selfadd/StudentCourses?Semester=${await storage.read(key: "CourseSemester")}&Grade=${await storage.read(key: "CourseGrade")}&CourseCompleteness=${await storage.read(key: "CourseCompleteness")}&CourseName=${await storage.read(key: "CourseName")}",
       headers: {
         HttpHeaders.authorizationHeader:
             "Bearer ${await storage.read(key: "token")}"
       });
   print(
-      "$address/selfadd/StudentCourses?Semester=${await storage.read(key: "CourseSemester")}&Grade=${await storage.read(key: "CourseGrade")}&Name=${await storage.read(key: "CourseName")}");
+      "$address/selfadd/StudentCourses?Semester=${await storage.read(key: "CourseSemester")}&Grade=${await storage.read(key: "CourseGrade")}&CourseCompleteness=${await storage.read(key: "CourseCompleteness")}&Name=${await storage.read(key: "CourseName")}");
   print(
       "This is the response status code for addCourse() = ${response.statusCode}");
   return response.statusCode;
@@ -1285,4 +1450,45 @@ Future<int> delCourse() async {
   print(
       "This is the response status code for delCourse() = ${response.statusCode}");
   return response.statusCode;
+}
+
+class Course {
+  final int courseID;
+  final String courseDept;
+  final int courseNum;
+  final String name;
+  final String institution;
+  final String grade;
+  final String semester;
+  //final bool taken;
+
+  Course(this.courseID, this.courseDept, this.courseNum, this.name,
+      this.institution, this.grade, this.semester);
+}
+
+Future<List<Course>> _getStudentCourses() async {
+  String studentId;
+  studentId = await storage.read(key: "studentId");
+  var response = await http.get("$address/CompleteCourses?Email=$studentId",
+      headers: {
+        HttpHeaders.authorizationHeader:
+            "Bearer ${await storage.read(key: "token")}"
+      });
+
+  if (response.statusCode != 200) return null;
+
+  var data = json.decode(response.body);
+
+  List<Course> courses = [];
+
+  for (var i in data) {
+    if (i["Grade"] != "n") {
+      Course course = Course(i["CourseID"], i["CourseDept"], i["CourseNum"],
+          i["Name"], i["Intstitution"], i["Grade"], i["Semester"]);
+
+      courses.add(course);
+    }
+  }
+
+  return courses;
 }
