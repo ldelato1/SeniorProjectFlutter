@@ -1,15 +1,20 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:pdf_render/pdf_render_widgets.dart';
+import 'package:seniordesign/studentpages/gpapage.dart';
 
+import './gpa_calc.dart';
 import 'package:flutter/material.dart';
 import 'package:nice_button/NiceButton.dart';
 import 'package:seniordesign/globals/globals.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
-
+import 'package:flutter_plugin_pdf_viewer/flutter_plugin_pdf_viewer.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:vertical_tabs/vertical_tabs.dart';
+import 'package:flutter/src/material/checkbox_list_tile.dart';
+
 
 class TabBarDemo extends StatefulWidget {
   //TabBarDemo({Key key, this.title}) : super(key: key);
@@ -19,8 +24,10 @@ class TabBarDemo extends StatefulWidget {
   @override
   _TabBarDemoState createState() => new _TabBarDemoState();
 }
-
-bool checkBoxValue = false;
+final Set _saved = Set();
+List<bool> checkBox = [false, false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false];
+bool cb1 = false;
+bool cb2 = false;
 class _TabBarDemoState extends State<TabBarDemo> {
   @override
   Widget build(BuildContext context) {
@@ -29,7 +36,7 @@ class _TabBarDemoState extends State<TabBarDemo> {
     return MaterialApp(
       
       home: DefaultTabController(
-        length: 3,
+        length: 4,
         child: Scaffold(
           backgroundColor: background,
           appBar: AppBar(
@@ -41,6 +48,7 @@ class _TabBarDemoState extends State<TabBarDemo> {
                   text: "Overview",
                 ),
                 Tab(icon: Icon(Icons.edit_outlined), text: "Courses"),
+                Tab(icon: Icon(Icons.contact_page_outlined), text: "Resources"),
                 Tab(
                     icon: Icon(Icons.settings_applications_outlined),
                     text: "Account"),
@@ -193,9 +201,9 @@ class _TabBarDemoState extends State<TabBarDemo> {
                                     radius: 180.0,
                                     lineWidth: 25.0,
                                     animation: true,
-                                    percent: 3 / 125,
+                                    percent: snapshot.data.hours / 125,
                                     center: new Text(
-                                      "${3 / 125 * 100}%",
+                                      "${snapshot.data.hours / 125 * 100}%",
                                       style: new TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 20.0),
@@ -253,257 +261,354 @@ class _TabBarDemoState extends State<TabBarDemo> {
                     ),
                     Card(
                       color: Color(0xffebebe8),
-
-                      child: ListTile(
+                      
+                      child: CheckboxListTile(
                         //leading: FlutterLogo(size: 56.0),
                         title: Text('Introduction to Computer Science'),
                         subtitle: Text('CSCI 1101'),
-                        trailing: Checkbox(
-                          value: checkBoxValue,
-                          onChanged: (bool value){
-                            print(value);
-                            setState((){
-                              checkBoxValue = value;
-                            });
-                          }
-                        ),
-                        
-                        onTap: () async {
-                          await storage.write(
-                              key: "CourseName",
-                              value: "CSCI 1101 Introduction to Computer Science");
-                          print(await storage.read(key: "CourseName"));
-                        
-                         
-                          showDialog(
-                            context: context,
-                            builder: (_) => EditPopUp(),
-                          );
+                        controlAffinity: 
+                          ListTileControlAffinity.trailing,
+                        value: checkBox[0],
+                        onChanged: (bool value) async {
+                          setState((){
+                            checkBox[0] = value;
+                            
+                          });
+                            await storage.write(
+                                key: "CourseName",
+                                value: "CSCI 1101 Introduction to Computer Science");
+                            print(await storage.read(key: "CourseName"));
+                          
+                            showDialog(
+                              context: context,
+                              builder: (_) => EditPopUp(),
+                            );
+                          
+
                         },
+                          activeColor: Colors.green,
+                          checkColor: Colors.black,
                       ),
                     ),
                     Card(
                       color: Color(0xffebebe8),
-                      child: ListTile(
+                      child: CheckboxListTile(
                         //leading: FlutterLogo(size: 56.0),
                         title: Text('Engineering Computer Science I Lab '),
                         subtitle: Text('CSCI 1170'),
-                        trailing: Icon(Icons.check_box_outline_blank,
-                            color: Colors.grey),
-                        onTap: () async {
-                          await storage.write(
-                              key: "CourseName",
-                              value: "CSCI 1170 Engineering Computer Science I Lab");
-                          print(await storage.read(key: "CourseName"));
-                         
-                          showDialog(
-                            context: context,
-                            builder: (_) => EditPopUp(),
-                          );
+                        controlAffinity: 
+                          ListTileControlAffinity.trailing,
+                        value: checkBox[1],
+                        onChanged: (bool value) async {
+                          setState((){
+                            checkBox[1] = value;
+                          });
+                            await storage.write(
+                                key: "CourseName",
+                                value: "CSCI 1170 Engineering Computer Science I Lab");
+                            print(await storage.read(key: "CourseName"));
+                          
+                            showDialog(
+                              context: context,
+                              builder: (_) => EditPopUp(),
+                            );
+                          
+
                         },
+                          activeColor: Colors.green,
+                          checkColor: Colors.black,
                       ),
                     ),
                     Card(
                       color: Color(0xffebebe8),
-                      child: ListTile(
+                      child: CheckboxListTile(
                         //leading: FlutterLogo(size: 56.0),
-                        title: Text(' Engineering Computer Science I'),
+                        title: Text('Engineering Computer Science I'),
                         subtitle: Text('CSCI 1370'),
-                        trailing: Icon(Icons.check_box_outline_blank,
-                            color: Colors.grey),
-                        onTap: () async {
-                          await storage.write(
-                              key: "CourseName",
-                              value: "CSCI 1370 Engineering Computer Science I");
-                          print(await storage.read(key: "CourseName"));
-                          showDialog(
-                            context: context,
-                            builder: (_) => EditPopUp(),
-                          );
+                        controlAffinity: 
+                          ListTileControlAffinity.trailing,
+                        value: checkBox[2],
+                        onChanged: (bool value) async {
+                          setState((){
+                            checkBox[2] = value;
+                          });
+                            await storage.write(
+                                key: "CourseName",
+                                value: "CSCI 1370 Engineering Computer Science I");
+                            print(await storage.read(key: "CourseName"));
+                          
+                            showDialog(
+                              context: context,
+                              builder: (_) => EditPopUp(),
+                            );
+                          
+
                         },
+                          activeColor: Colors.green,
+                          checkColor: Colors.black,
                       ),
                     ),
                     Card(
                       color: Color(0xffebebe8),
-                      child: ListTile(
+                      child: CheckboxListTile(
                         //leading: FlutterLogo(size: 56.0),
-                        title:
-                            Text('Computer Organization and Assembly Language'),
+                        title: Text('Computer Organization and Assembly Language'),
                         subtitle: Text('CSCI 2333'),
-                        trailing: Icon(Icons.check_box_outline_blank,
-                            color: Colors.grey),
-                        onTap: () async {
-                          await storage.write(
-                              key: "CourseName",
-                              value: "CSCI 2333 Computer Organization and Assembly Language");
-                          print(await storage.read(key: "CourseName"));
-                          showDialog(
-                            context: context,
-                            builder: (_) => EditPopUp(),
-                          );
+                        controlAffinity: 
+                          ListTileControlAffinity.trailing,
+                        value: checkBox[3],
+                        onChanged: (bool value) async {
+                          setState((){
+                            checkBox[3] = value;
+                          });
+                            await storage.write(
+                                key: "CourseName",
+                                value: "CSCI 2333 Computer Organization and Assembly Language");
+                            print(await storage.read(key: "CourseName"));
+                          
+                            showDialog(
+                              context: context,
+                              builder: (_) => EditPopUp(),
+                            );
+                          
+
                         },
+                          activeColor: Colors.green,
+                          checkColor: Colors.black,
                       ),
+                      
                     ),
                     Card(
                       color: Color(0xffebebe8),
-                      child: ListTile(
+                      child: CheckboxListTile(
                         //leading: FlutterLogo(size: 56.0),
                         title: Text('Programming in UNIX / Linux Environment'),
                         subtitle: Text('CSCI 2344'),
-                        trailing: Icon(Icons.check_box_outline_blank,
-                            color: Colors.grey),
-                        onTap: () async {
-                          await storage.write(
-                              key: "CourseName",
-                              value: "CSCI 2344 Programming in UNIX / Linux Environment");
-                          print(await storage.read(key: "CourseName"));
-                          showDialog(
-                            context: context,
-                            builder: (_) => EditPopUp(),
-                          );
+                        controlAffinity: 
+                          ListTileControlAffinity.trailing,
+                        value: checkBox[4],
+                        onChanged: (bool value) async {
+                          setState((){
+                            checkBox[4] = value;
+                          });
+                            await storage.write(
+                                key: "CourseName",
+                                value: "CSCI 2344 Programming in UNIX / Linux Environment");
+                            print(await storage.read(key: "CourseName"));
+                          
+                            showDialog(
+                              context: context,
+                              builder: (_) => EditPopUp(),
+                            );
+                          
+
                         },
+                          activeColor: Colors.green,
+                          checkColor: Colors.black,
                       ),
                     ),
                     Card(
                       color: Color(0xffebebe8),
-                      child: ListTile(
+                      child: CheckboxListTile(
                         //leading: FlutterLogo(size: 56.0),
                         title: Text('Computer Science II'),
                         subtitle: Text('CSCI 2380'),
-                        trailing: Icon(Icons.check_box_outline_blank,
-                            color: Colors.grey),
-                        onTap: () async {
-                          await storage.write(
-                              key: "CourseName",
-                              value: "CSCI 2380 Computer Science II");
-                          print(await storage.read(key: "CourseName"));
-                          showDialog(
-                            context: context,
-                            builder: (_) => EditPopUp(),
-                          );
+                        controlAffinity: 
+                          ListTileControlAffinity.trailing,
+                        value: checkBox[5],
+                        onChanged: (bool value) async {
+                          setState((){
+                            checkBox[5] = value;
+                          });
+                            await storage.write(
+                                key: "CourseName",
+                                value: "CSCI 2380 Computer Science II");
+                            print(await storage.read(key: "CourseName"));
+                          
+                            showDialog(
+                              context: context,
+                              builder: (_) => EditPopUp(),
+                            );
+                          
+
                         },
+                          activeColor: Colors.green,
+                          checkColor: Colors.black,
                       ),
+                      
                     ),
                     Card(
                       color: Color(0xffebebe8),
-                      child: ListTile(
+                      child: CheckboxListTile(
                         //leading: FlutterLogo(size: 56.0),
-                        title: Text(
-                            'Mathematical Foundations of Computer Science'),
+                        title: Text('Mathematical Foundations of Computer Science'),
                         subtitle: Text('CSCI 3310'),
-                        trailing: Icon(Icons.check_box_outline_blank,
-                            color: Colors.grey),
-                        onTap: () async {
-                          await storage.write(
-                              key: "CourseName",
-                              value: "CSCI 3310 Mathematical Foundations of Computer Science");
-                          print(await storage.read(key: "CourseName"));
-                          showDialog(
-                            context: context,
-                            builder: (_) => EditPopUp(),
-                          );
+                        controlAffinity: 
+                          ListTileControlAffinity.trailing,
+                        value: checkBox[6],
+                        onChanged: (bool value) async {
+                          setState((){
+                            checkBox[6] = value;
+                          });
+                            await storage.write(
+                                key: "CourseName",
+                                value: "CSCI 3310 Mathematical Foundations of Computer Science");
+                            print(await storage.read(key: "CourseName"));
+                          
+                            showDialog(
+                              context: context,
+                              builder: (_) => EditPopUp(),
+                            );
+                          
+
                         },
+                          activeColor: Colors.green,
+                          checkColor: Colors.black,
                       ),
                     ),
                     Card(
                       color: Color(0xffebebe8),
-                      child: ListTile(
+                      child: CheckboxListTile(
                         //leading: FlutterLogo(size: 56.0),
                         title: Text('Algorithms and Data Structures'),
                         subtitle: Text('CSCI 3333'),
-                        trailing: Icon(Icons.check_box_outline_blank,
-                            color: Colors.grey),
-                        onTap: () async {
-                          await storage.write(
-                              key: "CourseName",
-                              value: "CSCI 3333 Algorithms and Data Structures");
-                          print(await storage.read(key: "CourseName"));
-                          showDialog(
-                            context: context,
-                            builder: (_) => EditPopUp(),
-                          );
+                        controlAffinity: 
+                          ListTileControlAffinity.trailing,
+                        value: checkBox[7],
+                        onChanged: (bool value) async {
+                          setState((){
+                            checkBox[7] = value;
+                          });
+                            await storage.write(
+                                key: "CourseName",
+                                value: "CSCI 3333 Algorithms and Data Structures");
+                            print(await storage.read(key: "CourseName"));
+                          
+                            showDialog(
+                              context: context,
+                              builder: (_) => EditPopUp(),
+                            );
+                          
+
                         },
+                          activeColor: Colors.green,
+                          checkColor: Colors.black,
                       ),
                     ),
                     Card(
                       color: Color(0xffebebe8),
-                      child: ListTile(
+                      child: CheckboxListTile(
                         //leading: FlutterLogo(size: 56.0),
                         title: Text('Organization of Programming Languages'),
                         subtitle: Text('CSCI 3336'),
-                        trailing: Icon(Icons.check_box_outline_blank,
-                            color: Colors.grey),
-                        onTap: () async {
-                          await storage.write(
-                              key: "CourseName",
-                              value: "CSCI 3336 Organization of Programming Languages");
-                          print(await storage.read(key: "CourseName"));
-                          showDialog(
-                            context: context,
-                            builder: (_) => EditPopUp(),
-                          );
+                        controlAffinity: 
+                          ListTileControlAffinity.trailing,
+                        value: checkBox[8],
+                        onChanged: (bool value) async {
+                          setState((){
+                            checkBox[8] = value;
+                          });
+                            await storage.write(
+                                key: "CourseName",
+                                value: "CSCI 3336 Organization of Programming Languages");
+                            print(await storage.read(key: "CourseName"));
+                          
+                            showDialog(
+                              context: context,
+                              builder: (_) => EditPopUp(),
+                            );
+                          
+
                         },
+                          activeColor: Colors.green,
+                          checkColor: Colors.black,
                       ),
                     ),
                     Card(
                       color: Color(0xffebebe8),
-                      child: ListTile(
+                      child: CheckboxListTile(
                         //leading: FlutterLogo(size: 56.0),
                         title: Text('Software Engineering I'),
                         subtitle: Text('CSCI 3340'),
-                        trailing: Icon(Icons.check_box_outline_blank,
-                            color: Colors.grey),
-                        onTap: () async {
-                          await storage.write(
-                              key: "CourseName",
-                              value: "CSCI 3340 Software Engineering I");
-                          print(await storage.read(key: "CourseName"));
-                          showDialog(
-                            context: context,
-                            builder: (_) => EditPopUp(),
-                          );
+                        controlAffinity: 
+                          ListTileControlAffinity.trailing,
+                        value: checkBox[9],
+                        onChanged: (bool value) async {
+                          setState((){
+                            checkBox[9] = value;
+                          });
+                            await storage.write(
+                                key: "CourseName",
+                                value: "CSCI 3340 Software Engineering I");
+                            print(await storage.read(key: "CourseName"));
+                          
+                            showDialog(
+                              context: context,
+                              builder: (_) => EditPopUp(),
+                            );
+                          
+
                         },
+                          activeColor: Colors.green,
+                          checkColor: Colors.black,
                       ),
                     ),
                     Card(
                       color: Color(0xffebebe8),
-                      child: ListTile(
+                      child: CheckboxListTile(
                         //leading: FlutterLogo(size: 56.0),
-                        title: Text(
-                            'Automata, Formal Languages, and Computability'),
+                        title: Text('Automata, Formal Languages, and Computability'),
                         subtitle: Text('CSCI 4325'),
-                        trailing: Icon(Icons.check_box_outline_blank,
-                            color: Colors.grey),
-                        onTap: () async {
-                          await storage.write(
-                              key: "CourseName",
-                              value: "CSCI 4325 Automata, Formal Languages, and Computability");
-                          print(await storage.read(key: "CourseName"));
-                          showDialog(
-                            context: context,
-                            builder: (_) => EditPopUp(),
-                          );
+                        controlAffinity: 
+                          ListTileControlAffinity.trailing,
+                        value: checkBox[10],
+                        onChanged: (bool value) async {
+                          setState((){
+                            checkBox[10] = value;
+                          });
+                            await storage.write(
+                                key: "CourseName",
+                                value: "CSCI 4325 Automata, Formal Languages, and Computability");
+                            print(await storage.read(key: "CourseName"));
+                          
+                            showDialog(
+                              context: context,
+                              builder: (_) => EditPopUp(),
+                            );
+                          
+
                         },
+                          activeColor: Colors.green,
+                          checkColor: Colors.black,
                       ),
                     ),
                     Card(
                       color: Color(0xffebebe8),
-                      child: ListTile(
+                      child: CheckboxListTile(
                         //leading: FlutterLogo(size: 56.0),
                         title: Text('Senior Project'),
                         subtitle: Text('CSCI 4390'),
-                        trailing: Icon(Icons.check_box_outline_blank,
-                            color: Colors.grey),
-                        onTap: () async {
-                          await storage.write(
-                              key: "CourseName",
-                              value: "CSCI 4390 Senior Project");
-                          print(await storage.read(key: "CourseName"));
-                          showDialog(
-                            context: context,
-                            builder: (_) => EditPopUp(),
-                          );
+                        controlAffinity: 
+                          ListTileControlAffinity.trailing,
+                        value: checkBox[11],
+                        onChanged: (bool value) async {
+                          setState((){
+                            checkBox[11] = value;
+                          });
+                            await storage.write(
+                                key: "CourseName",
+                                value: "CSCI 4390 Senior Project");
+                            print(await storage.read(key: "CourseName"));
+                          
+                            showDialog(
+                              context: context,
+                              builder: (_) => EditPopUp(),
+                            );
+                          
+
                         },
+                          activeColor: Colors.green,
+                          checkColor: Colors.black,
                       ),
                     ),
                   ]),
@@ -556,63 +661,89 @@ class _TabBarDemoState extends State<TabBarDemo> {
                     ),
                     Card(
                       color: Color(0xffebebe8),
-                      child: ListTile(
+                      child: CheckboxListTile(
                         //leading: FlutterLogo(size: 56.0),
                         title: Text('Object Oriented Programming in JAVA'),
                         subtitle: Text('CSCI 3326'),
-                        trailing: Icon(Icons.check_box_outline_blank,
-                            color: Colors.grey),
-                        onTap: () async {
-                          await storage.write(
-                              key: "CourseName",
-                              value: "CSCI 3326 Object Oriented Programming in JAVA");
-                          print(await storage.read(key: "CourseName"));
-                          showDialog(
-                            context: context,
-                            builder: (_) => EditPopUp(),
-                          );
+                        controlAffinity: 
+                          ListTileControlAffinity.trailing,
+                        value: checkBox[12],
+                        onChanged: (bool value) async {
+                          setState((){
+                            checkBox[12] = value;
+                          });
+                            await storage.write(
+                                key: "CourseName",
+                                value: "CSCI 3326 Object Oriented Programming in JAVA");
+                            print(await storage.read(key: "CourseName"));
+                          
+                            showDialog(
+                              context: context,
+                              builder: (_) => EditPopUp(),
+                            );
+                          
+
                         },
+                          activeColor: Colors.green,
+                          checkColor: Colors.black,
                       ),
                     ),
                     Card(
                       color: Color(0xffebebe8),
-                      child: ListTile(
+                      child: CheckboxListTile(
                         //leading: FlutterLogo(size: 56.0),
-                        title:
-                            Text('Object Oriented Programming in Visual Basic'),
+                        title: Text('Object Oriented Programming in Visual Basic'),
                         subtitle: Text('CSCI 3327'),
-                        trailing: Icon(Icons.check_box_outline_blank,
-                            color: Colors.grey),
-                        onTap: () async {
-                          await storage.write(
-                              key: "CourseName",
-                              value: "CSCI 3327 Object Oriented Programming in Visual Basic");
-                          print(await storage.read(key: "CourseName"));
-                          showDialog(
-                            context: context,
-                            builder: (_) => EditPopUp(),
-                          );
+                        controlAffinity: 
+                          ListTileControlAffinity.trailing,
+                        value: checkBox[13],
+                        onChanged: (bool value) async {
+                          setState((){
+                            checkBox[13] = value;
+                          });
+                            await storage.write(
+                                key: "CourseName",
+                                value: "CSCI 3327 Object Oriented Programming in Visual Basic");
+                            print(await storage.read(key: "CourseName"));
+                          
+                            showDialog(
+                              context: context,
+                              builder: (_) => EditPopUp(),
+                            );
+                          
+
                         },
+                          activeColor: Colors.green,
+                          checkColor: Colors.black,
                       ),
                     ),
                     Card(
                       color: Color(0xffebebe8),
-                      child: ListTile(
+                      child: CheckboxListTile(
                         //leading: FlutterLogo(size: 56.0),
                         title: Text('Object Oriented Programming in C#'),
                         subtitle: Text('CSCI 3328'),
-                        trailing: Icon(Icons.check_box_outline_blank,
-                            color: Colors.grey),
-                        onTap: () async {
-                          await storage.write(
-                              key: "CourseName",
-                              value: "CSCI 3328 Object Oriented Programming in C#");
-                          print(await storage.read(key: "CourseName"));
-                          showDialog(
-                            context: context,
-                            builder: (_) => EditPopUp(),
-                          );
+                        controlAffinity: 
+                          ListTileControlAffinity.trailing,
+                        value: checkBox[14],
+                        onChanged: (bool value) async {
+                          setState((){
+                            checkBox[14] = value;
+                          });
+                            await storage.write(
+                                key: "CourseName",
+                                value: "CSCI 3328 Object Oriented Programming in C#");
+                            print(await storage.read(key: "CourseName"));
+                          
+                            showDialog(
+                              context: context,
+                              builder: (_) => EditPopUp(),
+                            );
+                          
+
                         },
+                          activeColor: Colors.green,
+                          checkColor: Colors.black,
                       ),
                     ),
                     RichText(
@@ -649,82 +780,118 @@ class _TabBarDemoState extends State<TabBarDemo> {
                     ),
                     Card(
                       color: Color(0xffebebe8),
-                      child: ListTile(
+                      child: CheckboxListTile(
                         //leading: FlutterLogo(size: 56.0),
                         title: Text('Database Design and Implementation'),
                         subtitle: Text('CSCI 4333'),
-                        trailing: Icon(Icons.check_box_outline_blank,
-                            color: Colors.grey),
-                        onTap: () async {
-                          await storage.write(
-                              key: "CourseName",
-                              value: "CSCI 4333 Database Design and Implementation");
-                          print(await storage.read(key: "CourseName"));
-                          showDialog(
-                            context: context,
-                            builder: (_) => EditPopUp(),
-                          );
+                        controlAffinity: 
+                          ListTileControlAffinity.trailing,
+                        value: checkBox[15],
+                        onChanged: (bool value) async {
+                          setState((){
+                            checkBox[15] = value;
+                          });
+                            await storage.write(
+                                key: "CourseName",
+                                value: "CSCI 4333 Database Design and Implementation");
+                            print(await storage.read(key: "CourseName"));
+                          
+                            showDialog(
+                              context: context,
+                              builder: (_) => EditPopUp(),
+                            );
+                          
+
                         },
+                          activeColor: Colors.green,
+                          checkColor: Colors.black,
                       ),
                     ),
                     Card(
                       color: Color(0xffebebe8),
-                      child: ListTile(
+                      child: CheckboxListTile(
                         //leading: FlutterLogo(size: 56.0),
                         title: Text('Operating Systems'),
                         subtitle: Text('CSCI 4334'),
-                        trailing: Icon(Icons.check_box_outline_blank,
-                            color: Colors.grey),
-                        onTap: () async {
-                          await storage.write(
-                              key: "CourseName",
-                              value: "CSCI 4334 Operating Systems");
-                          print(await storage.read(key: "CourseName"));
-                          showDialog(
-                            context: context,
-                            builder: (_) => EditPopUp(),
-                          );
+                        controlAffinity: 
+                          ListTileControlAffinity.trailing,
+                        value: checkBox[16],
+                        onChanged: (bool value) async {
+                          setState((){
+                            checkBox[16] = value;
+                          });
+                            await storage.write(
+                                key: "CourseName",
+                                value: "CSCI 4334 Operating Systems");
+                            print(await storage.read(key: "CourseName"));
+                          
+                            showDialog(
+                              context: context,
+                              builder: (_) => EditPopUp(),
+                            );
+                          
+
                         },
+                          activeColor: Colors.green,
+                          checkColor: Colors.black,
                       ),
                     ),
                     Card(
                       color: Color(0xffebebe8),
-                      child: ListTile(
+                      child: CheckboxListTile(
                         //leading: FlutterLogo(size: 56.0),
                         title: Text('Computer Architecture'),
                         subtitle: Text('CSCI 4335'),
-                        trailing: Icon(Icons.check_box_outline_blank,
-                            color: Colors.grey),
-                        onTap: () async {
-                          await storage.write(
-                              key: "CourseName",
-                              value: "CSCI 4335 Computer Architecture");
-                          print(await storage.read(key: "CourseName"));
-                          showDialog(
-                            context: context,
-                            builder: (_) => EditPopUp(),
-                          );
+                        controlAffinity: 
+                          ListTileControlAffinity.trailing,
+                        value: checkBox[17],
+                        onChanged: (bool value) async {
+                          setState((){
+                            checkBox[17] = value;
+                          });
+                            await storage.write(
+                                key: "CourseName",
+                                value: "CSCI 4335 Computer Architecture");
+                            print(await storage.read(key: "CourseName"));
+                          
+                            showDialog(
+                              context: context,
+                              builder: (_) => EditPopUp(),
+                            );
+                          
+
                         },
+                          activeColor: Colors.green,
+                          checkColor: Colors.black,
                       ),
                     ),
                     Card(
                       color: Color(0xffebebe8),
-                      child: ListTile(
+                      child: CheckboxListTile(
                         //leading: FlutterLogo(size: 56.0),
                         title: Text('Computer Networks'),
                         subtitle: Text('CSCI 4345'),
-                        trailing: Icon(Icons.check_box_outline_blank,
-                            color: Colors.grey),
-                        onTap: () async {
-                          await storage.write(
-                              key: "CourseName",
-                              value: "CSCI 4345 Computer Networks");
-                          print(await storage.read(key: "CourseName"));
-                          showDialog(
-                            context: context,
-                            builder: (_) => EditPopUp(),
-                          );
+                        controlAffinity: 
+                          ListTileControlAffinity.trailing,
+                        value: checkBox[18],
+                        onChanged: (bool value) async {
+                          setState((){
+                            checkBox[18] = value;
+                          });
+                            await storage.write(
+                                key: "CourseName",
+                                value: "CSCI 4345 Computer Networks");
+                            print(await storage.read(key: "CourseName"));
+                          
+                            showDialog(
+                              context: context,
+                              builder: (_) => EditPopUp(),
+                            );
+                          
+
                         },
+                          activeColor: Colors.green,
+                          checkColor: Colors.black,
                       ),
                     ),
                     RichText(
@@ -760,62 +927,89 @@ class _TabBarDemoState extends State<TabBarDemo> {
                     ),
                     Card(
                       color: Color(0xffebebe8),
-                      child: ListTile(
+                      child: CheckboxListTile(
                         //leading: FlutterLogo(size: 56.0),
                         title: Text('Computer Architecture'),
                         subtitle: Text('CSCI 3341'),
-                        trailing: Icon(Icons.check_box_outline_blank,
-                            color: Colors.grey),
-                        onTap: () async {
-                          await storage.write(
-                              key: "CourseName",
-                              value: "CSCI 3341 Computer Architecture");
-                          print(await storage.read(key: "CourseName"));
-                          showDialog(
-                            context: context,
-                            builder: (_) => EditPopUp(),
-                          );
+                        controlAffinity: 
+                          ListTileControlAffinity.trailing,
+                        value: checkBox[19],
+                        onChanged: (bool value) async {
+                          setState((){
+                            checkBox[19] = value;
+                          });
+                            await storage.write(
+                                key: "CourseName",
+                                value: "CSCI 3341 Computer Architecture");
+                            print(await storage.read(key: "CourseName"));
+                          
+                            showDialog(
+                              context: context,
+                              builder: (_) => EditPopUp(),
+                            );
+                          
+
                         },
+                          activeColor: Colors.green,
+                          checkColor: Colors.black,
                       ),
                     ),
                     Card(
                       color: Color(0xffebebe8),
-                      child: ListTile(
+                      child: CheckboxListTile(
                         //leading: FlutterLogo(size: 56.0),
                         title: Text('Internship in Computer Science'),
                         subtitle: Text('CSCI 3300'),
-                        trailing: Icon(Icons.check_box_outline_blank,
-                            color: Colors.grey),
-                        onTap: () async {
-                          await storage.write(
-                              key: "CourseName",
-                              value: "CSCI 3300 Internship in Computer Science");
-                          print(await storage.read(key: "CourseName"));
-                          showDialog(
-                            context: context,
-                            builder: (_) => EditPopUp(),
-                          );
+                        controlAffinity: 
+                          ListTileControlAffinity.trailing,
+                        value: checkBox[20],
+                        onChanged: (bool value) async {
+                          setState((){
+                            checkBox[20] = value;
+                          });
+                            await storage.write(
+                                key: "CourseName",
+                                value: "CSCI 3300 Internship in Computer Science");
+                            print(await storage.read(key: "CourseName"));
+                          
+                            showDialog(
+                              context: context,
+                              builder: (_) => EditPopUp(),
+                            );
+                          
+
                         },
+                          activeColor: Colors.green,
+                          checkColor: Colors.black,
                       ),
                     ),
                     Card(
                       color: Color(0xffebebe8),
-                      child: ListTile(
+                      child: CheckboxListTile(
                         //leading: FlutterLogo(size: 56.0),
                         title: Text('Internet Programming'),
                         subtitle: Text('CSCI 3342'),
-                        trailing: Icon(Icons.check_box_outline_blank,
-                            color: Colors.grey),
-                        onTap: () async {
-                          await storage.write(
-                              key: "CourseName",
-                              value: "CSCI 3342 Internet Programming");
-                          print(await storage.read(key: "CourseName"));
-                          showDialog(
-                            context: context,
-                            builder: (_) => EditPopUp(),
-                          );
+                        controlAffinity: 
+                          ListTileControlAffinity.trailing,
+                        value: checkBox[21],
+                        onChanged: (bool value) async {
+                          setState((){
+                            checkBox[21] = value;
+                          });
+                            await storage.write(
+                                key: "CourseName",
+                                value: "CSCI 3342 Internet Programming");
+                            print(await storage.read(key: "CourseName"));
+                          
+                            showDialog(
+                              context: context,
+                              builder: (_) => EditPopUp(),
+                            );
+                          
+
                         },
+                          activeColor: Colors.green,
+                          checkColor: Colors.black,
                       ),
                     )
                   ]),
@@ -837,22 +1031,31 @@ class _TabBarDemoState extends State<TabBarDemo> {
                     ),
                     Card(
                       color: Color(0xffebebe8),
-                      child: ListTile(
+                      child: CheckboxListTile(
                         //leading: FlutterLogo(size: 56.0),
                         title: Text('Digital Systems Engineering I'),
-                        subtitle: Text('ELEE 2330'),
-                        trailing: Icon(Icons.check_box_outline_blank,
-                            color: Colors.grey),
-                        onTap: () async {
-                          await storage.write(
-                              key: "CourseName",
-                              value: "EELE 2330 Digital Systems Engineering I");
-                          print(await storage.read(key: "CourseName"));
-                          showDialog(
-                            context: context,
-                            builder: (_) => EditPopUp(),
-                          );
+                        subtitle: Text('ELEE 2380'),
+                        controlAffinity: 
+                          ListTileControlAffinity.trailing,
+                        value: checkBox[22],
+                        onChanged: (bool value) async {
+                          setState((){
+                            checkBox[22] = value;
+                          });
+                            await storage.write(
+                                key: "CourseName",
+                                value: "EELE 2330 Digital Systems Engineering I");
+                            print(await storage.read(key: "CourseName"));
+                          
+                            showDialog(
+                              context: context,
+                              builder: (_) => EditPopUp(),
+                            );
+                          
+
                         },
+                          activeColor: Colors.green,
+                          checkColor: Colors.black,
                       ),
                     ),
                   ]),
@@ -874,41 +1077,60 @@ class _TabBarDemoState extends State<TabBarDemo> {
                     ),
                     Card(
                       color: Color(0xffebebe8),
-                      child: ListTile(
+                      child: CheckboxListTile(
                         //leading: FlutterLogo(size: 56.0),
                         title: Text('Technical Communication'),
                         subtitle: Text('ENGL 3342'),
-                        trailing: Icon(Icons.check_circle, color: Colors.green),
-                        onTap: () async {
-                          await storage.write(
-                              key: "CourseName",
-                              value: "ENGL 3342 Technical Communication");
-                          print(await storage.read(key: "CourseName"));
-                          showDialog(
-                            context: context,
-                            builder: (_) => EditPopUp(),
-                          );
+                        controlAffinity: 
+                          ListTileControlAffinity.trailing,
+                        value: checkBox[23],
+                        onChanged: (bool value) async {
+                          setState((){
+                            checkBox[23] = value;
+                          });
+                            await storage.write(
+                                key: "CourseName",
+                                value: "ENGL 3342 Technical Communication");
+                            print(await storage.read(key: "CourseName"));
+                          
+                            showDialog(
+                              context: context,
+                              builder: (_) => EditPopUp(),
+                            );
+                          
+
                         },
+                          activeColor: Colors.green,
+                          checkColor: Colors.black,
                       ),
                     ),
                     Card(
                       color: Color(0xffebebe8),
-                      child: ListTile(
+                      child: CheckboxListTile(
                         //leading: FlutterLogo(size: 56.0),
                         title: Text('Digital Systems Engineering I Lab'),
                         subtitle: Text('ELEE 2130'),
-                        trailing: Icon(Icons.check_box_outline_blank,
-                            color: Colors.red),
-                        onTap: () async {
-                          await storage.write(
-                              key: "CourseName",
-                              value: "ELEE 2130 Digital Systems Engineering I Lab");
-                          print(await storage.read(key: "CourseName"));
-                          showDialog(
-                            context: context,
-                            builder: (_) => EditPopUp(),
-                          );
+                        controlAffinity: 
+                          ListTileControlAffinity.trailing,
+                        value: checkBox[24],
+                        onChanged: (bool value) async {
+                          setState((){
+                            checkBox[24] = value;
+                          });
+                            await storage.write(
+                                key: "CourseName",
+                                value: "ELEE 2130 Digital Systems Engineering I Lab");
+                            print(await storage.read(key: "CourseName"));
+                          
+                            showDialog(
+                              context: context,
+                              builder: (_) => EditPopUp(),
+                            );
+                          
+
                         },
+                          activeColor: Colors.green,
+                          checkColor: Colors.black,
                       ),
                     ),
                   ]),
@@ -1036,6 +1258,51 @@ class _TabBarDemoState extends State<TabBarDemo> {
                     
                     
                   ]),
+                ],
+              ),
+                ListView(
+                children: <Widget>[
+                  ListTile(
+                    title: Text('Road Map to graduation'),
+                    tileColor: Colors.white,
+                    trailing: Icon(Icons.keyboard_arrow_right),
+                    onTap: () async {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Roadmap()),
+                      );
+                    },
+                  ),
+                  ListTile(
+                    title: Text('GPA calculator'),
+                    tileColor: Colors.white,
+                    trailing: Icon(Icons.keyboard_arrow_right),
+                    onTap: () {
+                      Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => GPA()),
+                          );
+                    },
+                  ),
+                  ListTile(
+                    title: Text('Schedule an appointment'),
+                    tileColor: Colors.white,
+                    trailing: Icon(Icons.keyboard_arrow_right),
+                    onTap: () {
+                      print('Star');
+                    },
+                  ),
+                     ListTile(
+                    title: Text('Contact'),
+                    tileColor: Colors.white,
+                    trailing: Icon(Icons.keyboard_arrow_right),
+                    onTap: () {
+                     Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => Contact()),
+                          );
+                    },
+                  ),
                 ],
               ),
               //],
@@ -1427,7 +1694,221 @@ class EditPopUpState extends State<EditPopUp>
     );
   }
 }
+class Roadmap extends StatefulWidget {
+  //  Roadmap({Key key, this.title}) : super(key: key);
+  // final String title;
+  @override
+  RoadmapState createState() => new RoadmapState();
+}
 
+class RoadmapState extends State<Roadmap> {
+  bool _isLoading = true;
+  PDFDocument doc;
+
+  void _loadFromAssets() async {
+    setState(() {
+      _isLoading = true;
+    });
+    doc = await PDFDocument.fromAsset('assets/images/flowchart.pdf');
+    setState(() {
+      _isLoading = false;
+    });
+  }
+
+  void _loadFromUrl() async {
+    setState(() {
+      _isLoading = true;
+    });
+    doc = await PDFDocument.fromURL(
+        'https://www.utrgv.edu/advising/_files/documents/roadmaps/2020/bscs_computer_science.pdf');
+    setState(() {
+      _isLoading = false;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          backgroundColor: background,
+          
+        ),
+        
+            body: Center(
+        child: Column(
+         
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Flexible(
+              
+              flex: 8,
+              
+              child: _isLoading
+                 ? CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(Colors.white))
+                  : PDFViewer(
+                      document: doc,
+                    ),
+            ),
+            Flexible(
+              flex: 2,
+            
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+              
+                child: ListView(
+              
+                 /// mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    
+                     TextButton(
+                      style: TextButton.styleFrom(
+                      backgroundColor: utrgv_orange
+                       ),
+                      child: Text(
+                        'Computer Science Flowchart 2020',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      onPressed: _loadFromAssets,
+                    ),
+                    TextButton(
+                      style: TextButton.styleFrom(
+                      backgroundColor: utrgv_orange
+                       ),
+                      child: Text(
+                        'Computer Science Roadmap 2020',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      onPressed: _loadFromUrl,
+                    ),
+                   
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+class Contact extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final title = 'Contact';
+    
+    return MaterialApp(
+      title: title,
+      home: Scaffold(
+        appBar: AppBar(
+          backgroundColor: background,
+          title: Text(title),
+        ),
+        body: ListView(
+          children: <Widget>[
+            
+            ListTile(
+              leading: Icon(Icons.phone),
+              title: Text('Phone'),
+              subtitle: Text('Phone: 956-665-2320'),
+            ),
+            ListTile(
+              leading: Icon(Icons.email),
+              title: Text('Email'),
+              subtitle: Text('Email: csci@utrgv.edu'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+
+class GPA extends StatefulWidget {
+  @override
+  GPAState createState() => new GPAState();
+}
+
+class GPAState extends State<GPA> {
+  TextEditingController controller = new TextEditingController();
+  int n;
+  @override
+  Widget build(BuildContext context) {
+    return new Scaffold(
+      appBar: new AppBar(
+          title: new Text("GPA calculator"), backgroundColor: utrgv_orange),
+      backgroundColor: background,
+      body: new Container(
+        decoration: new BoxDecoration(
+            border: new Border.all(color: Colors.transparent, width: 25.0),
+            color: Colors.transparent),
+        child: new ListView(
+          children: <Widget>[
+            new TextField(
+              textAlign: TextAlign.center,
+              autofocus: true,
+              decoration: new InputDecoration(
+                  fillColor: utrgv_orange,
+                  hintText: "How many subjects did you have ",
+                  hintStyle: new TextStyle(color: Colors.black54)),
+              keyboardType: TextInputType.number,
+              controller: controller,
+              onChanged: (String str) {
+                setState(() {
+                  if (controller.text == "") n = 0;
+                  n = int.parse(controller.text);
+                });
+              },
+            ),
+            new IconButton(
+              icon: new Icon(Icons.arrow_forward),
+              onPressed: () {
+                if (n is int && n > 0) {
+                  int pass = n;
+                  n = 0;
+                  controller.text = "";
+                  Navigator.of(context).push(new MaterialPageRoute(
+                      builder: (BuildContext context) => new GPAcalc(pass)));
+                } else {
+                  controller.text = "";
+                  alert();
+                }
+              },
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Future<Null> alert() async {
+    return showDialog<Null>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return new AlertDialog(
+          title: new Text('rewind and regret fool !'),
+          content: new SingleChildScrollView(
+            child: new ListBody(
+              children: <Widget>[
+                new Text('You think you are smart?.'),
+                new Text('Guess what... you are not.'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            new FlatButton(
+              child: new Text('Regret'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+}
 Future<int> addCourse() async {
   var response = await http.post(
       "$address/selfadd/StudentCourses?Semester=${await storage.read(key: "CourseSemester")}&Grade=${await storage.read(key: "CourseGrade")}&CourseCompleteness=${await storage.read(key: "CourseCompleteness")}&CourseName=${await storage.read(key: "CourseName")}",
@@ -1436,7 +1917,7 @@ Future<int> addCourse() async {
             "Bearer ${await storage.read(key: "token")}"
       });
   print(
-      "$address/selfadd/StudentCourses?Semester=${await storage.read(key: "CourseSemester")}&Grade=${await storage.read(key: "CourseGrade")}&CourseCompleteness=${await storage.read(key: "CourseCompleteness")}&Name=${await storage.read(key: "CourseName")}");
+      "$address/selfadd/StudentCourses?Semester=${await storage.read(key: "CourseSemester")}&Grade=${await storage.read(key: "CourseGrade")}&CourseCompleteness=${await storage.read(key: "CourseCompleteness")}&CourseName=${await storage.read(key: "CourseName")}");
   print(
       "This is the response status code for addCourse() = ${response.statusCode}");
   return response.statusCode;
