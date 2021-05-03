@@ -26,8 +26,7 @@ class TabBarDemo extends StatefulWidget {
 }
 final Set _saved = Set();
 List<bool> checkBox = [false, false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false];
-bool cb1 = false;
-bool cb2 = false;
+
 class _TabBarDemoState extends State<TabBarDemo> {
   @override
   Widget build(BuildContext context) {
@@ -63,6 +62,7 @@ class _TabBarDemoState extends State<TabBarDemo> {
                 children: [
                   Container(
                     //The First container for STUDENT INFORMATION!
+                    //
                     decoration: BoxDecoration(color: Color(0xff65646a)),
                     child: FutureBuilder(
                       future: _getUser(),
@@ -127,7 +127,7 @@ class _TabBarDemoState extends State<TabBarDemo> {
                                                     color: Colors.grey),
                                               ),
                                               TextSpan(
-                                                text: '${snapshot.data.gpa}\n',
+                                                text: '${double.parse((snapshot.data.gpa).toStringAsFixed(2))}\n',
                                                 style: TextStyle(
                                                     color: Colors.white),
                                               ),
@@ -203,7 +203,7 @@ class _TabBarDemoState extends State<TabBarDemo> {
                                     animation: true,
                                     percent: snapshot.data.hours / 125,
                                     center: new Text(
-                                      "${snapshot.data.hours / 125 * 100}%",
+                                      "${(snapshot.data.hours / 125 * 100).round()}%",
                                       style: new TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 20.0),
@@ -276,7 +276,7 @@ class _TabBarDemoState extends State<TabBarDemo> {
                           });
                             await storage.write(
                                 key: "CourseName",
-                                value: "CSCI 1101 Introduction to Computer Science");
+                                value: "Introduction to Computer Science");
                             print(await storage.read(key: "CourseName"));
                           
                             showDialog(
@@ -305,7 +305,7 @@ class _TabBarDemoState extends State<TabBarDemo> {
                           });
                             await storage.write(
                                 key: "CourseName",
-                                value: "CSCI 1170 Engineering Computer Science I Lab");
+                                value: "Engineering Computer Science I Lab");
                             print(await storage.read(key: "CourseName"));
                           
                             showDialog(
@@ -334,7 +334,7 @@ class _TabBarDemoState extends State<TabBarDemo> {
                           });
                             await storage.write(
                                 key: "CourseName",
-                                value: "CSCI 1370 Engineering Computer Science I");
+                                value: "Engineering Computer Science I");
                             print(await storage.read(key: "CourseName"));
                           
                             showDialog(
@@ -363,7 +363,7 @@ class _TabBarDemoState extends State<TabBarDemo> {
                           });
                             await storage.write(
                                 key: "CourseName",
-                                value: "CSCI 2333 Computer Organization and Assembly Language");
+                                value: "Computer Organization and Assembly Language");
                             print(await storage.read(key: "CourseName"));
                           
                             showDialog(
@@ -393,7 +393,7 @@ class _TabBarDemoState extends State<TabBarDemo> {
                           });
                             await storage.write(
                                 key: "CourseName",
-                                value: "CSCI 2344 Programming in UNIX / Linux Environment");
+                                value: "Programming in UNIX / Linux Environment");
                             print(await storage.read(key: "CourseName"));
                           
                             showDialog(
@@ -422,7 +422,7 @@ class _TabBarDemoState extends State<TabBarDemo> {
                           });
                             await storage.write(
                                 key: "CourseName",
-                                value: "CSCI 2380 Computer Science II");
+                                value: "Computer Science II");
                             print(await storage.read(key: "CourseName"));
                           
                             showDialog(
@@ -452,7 +452,7 @@ class _TabBarDemoState extends State<TabBarDemo> {
                           });
                             await storage.write(
                                 key: "CourseName",
-                                value: "CSCI 3310 Mathematical Foundations of Computer Science");
+                                value: "Mathematical Foundations of Computer Science");
                             print(await storage.read(key: "CourseName"));
                           
                             showDialog(
@@ -481,7 +481,7 @@ class _TabBarDemoState extends State<TabBarDemo> {
                           });
                             await storage.write(
                                 key: "CourseName",
-                                value: "CSCI 3333 Algorithms and Data Structures");
+                                value: "Algorithms and Data Structures");
                             print(await storage.read(key: "CourseName"));
                           
                             showDialog(
@@ -510,7 +510,7 @@ class _TabBarDemoState extends State<TabBarDemo> {
                           });
                             await storage.write(
                                 key: "CourseName",
-                                value: "CSCI 3336 Organization of Programming Languages");
+                                value: "Organization of Programming Languages");
                             print(await storage.read(key: "CourseName"));
                           
                             showDialog(
@@ -539,7 +539,7 @@ class _TabBarDemoState extends State<TabBarDemo> {
                           });
                             await storage.write(
                                 key: "CourseName",
-                                value: "CSCI 3340 Software Engineering I");
+                                value: "Software Engineering I");
                             print(await storage.read(key: "CourseName"));
                           
                             showDialog(
@@ -568,7 +568,7 @@ class _TabBarDemoState extends State<TabBarDemo> {
                           });
                             await storage.write(
                                 key: "CourseName",
-                                value: "CSCI 4325 Automata, Formal Languages, and Computability");
+                                value: "Automata, Formal Languages, and Computability");
                             print(await storage.read(key: "CourseName"));
                           
                             showDialog(
@@ -597,7 +597,7 @@ class _TabBarDemoState extends State<TabBarDemo> {
                           });
                             await storage.write(
                                 key: "CourseName",
-                                value: "CSCI 4390 Senior Project");
+                                value: "Senior Project");
                             print(await storage.read(key: "CourseName"));
                           
                             showDialog(
@@ -674,7 +674,7 @@ class _TabBarDemoState extends State<TabBarDemo> {
                           });
                             await storage.write(
                                 key: "CourseName",
-                                value: "CSCI 3326 Object Oriented Programming in JAVA");
+                                value: "Object Oriented Programming in JAVA");
                             print(await storage.read(key: "CourseName"));
                           
                             showDialog(
@@ -703,7 +703,7 @@ class _TabBarDemoState extends State<TabBarDemo> {
                           });
                             await storage.write(
                                 key: "CourseName",
-                                value: "CSCI 3327 Object Oriented Programming in Visual Basic");
+                                value: "Object Oriented Programming in Visual Basic");
                             print(await storage.read(key: "CourseName"));
                           
                             showDialog(
@@ -732,7 +732,7 @@ class _TabBarDemoState extends State<TabBarDemo> {
                           });
                             await storage.write(
                                 key: "CourseName",
-                                value: "CSCI 3328 Object Oriented Programming in C#");
+                                value: "Object Oriented Programming in C#");
                             print(await storage.read(key: "CourseName"));
                           
                             showDialog(
@@ -793,7 +793,7 @@ class _TabBarDemoState extends State<TabBarDemo> {
                           });
                             await storage.write(
                                 key: "CourseName",
-                                value: "CSCI 4333 Database Design and Implementation");
+                                value: "Database Design and Implementation");
                             print(await storage.read(key: "CourseName"));
                           
                             showDialog(
@@ -822,7 +822,7 @@ class _TabBarDemoState extends State<TabBarDemo> {
                           });
                             await storage.write(
                                 key: "CourseName",
-                                value: "CSCI 4334 Operating Systems");
+                                value: "Operating Systems");
                             print(await storage.read(key: "CourseName"));
                           
                             showDialog(
@@ -851,7 +851,7 @@ class _TabBarDemoState extends State<TabBarDemo> {
                           });
                             await storage.write(
                                 key: "CourseName",
-                                value: "CSCI 4335 Computer Architecture");
+                                value: "Computer Architecture");
                             print(await storage.read(key: "CourseName"));
                           
                             showDialog(
@@ -880,7 +880,7 @@ class _TabBarDemoState extends State<TabBarDemo> {
                           });
                             await storage.write(
                                 key: "CourseName",
-                                value: "CSCI 4345 Computer Networks");
+                                value: "Computer Networks");
                             print(await storage.read(key: "CourseName"));
                           
                             showDialog(
@@ -940,7 +940,7 @@ class _TabBarDemoState extends State<TabBarDemo> {
                           });
                             await storage.write(
                                 key: "CourseName",
-                                value: "CSCI 3341 Computer Architecture");
+                                value: "Computer Architecture");
                             print(await storage.read(key: "CourseName"));
                           
                             showDialog(
@@ -969,7 +969,7 @@ class _TabBarDemoState extends State<TabBarDemo> {
                           });
                             await storage.write(
                                 key: "CourseName",
-                                value: "CSCI 3300 Internship in Computer Science");
+                                value: "Internship in Computer Science");
                             print(await storage.read(key: "CourseName"));
                           
                             showDialog(
@@ -998,7 +998,7 @@ class _TabBarDemoState extends State<TabBarDemo> {
                           });
                             await storage.write(
                                 key: "CourseName",
-                                value: "CSCI 3342 Internet Programming");
+                                value: "Internet Programming");
                             print(await storage.read(key: "CourseName"));
                           
                             showDialog(
@@ -1044,7 +1044,7 @@ class _TabBarDemoState extends State<TabBarDemo> {
                           });
                             await storage.write(
                                 key: "CourseName",
-                                value: "EELE 2330 Digital Systems Engineering I");
+                                value: "Digital Systems Engineering I");
                             print(await storage.read(key: "CourseName"));
                           
                             showDialog(
@@ -1090,7 +1090,7 @@ class _TabBarDemoState extends State<TabBarDemo> {
                           });
                             await storage.write(
                                 key: "CourseName",
-                                value: "ENGL 3342 Technical Communication");
+                                value: "Technical Communication");
                             print(await storage.read(key: "CourseName"));
                           
                             showDialog(
@@ -1119,7 +1119,7 @@ class _TabBarDemoState extends State<TabBarDemo> {
                           });
                             await storage.write(
                                 key: "CourseName",
-                                value: "ELEE 2130 Digital Systems Engineering I Lab");
+                                value: "Digital Systems Engineering I Lab");
                             print(await storage.read(key: "CourseName"));
                           
                             showDialog(
@@ -1255,6 +1255,94 @@ class _TabBarDemoState extends State<TabBarDemo> {
                                     color: Colors.white)),
                           ]),
                     ),
+                    Container(
+                                      
+                        decoration: BoxDecoration(color: Color(0xff65646a)),
+                        child: FutureBuilder(
+                          future: _getPlannedFutureCourses(),
+                          builder: (BuildContext context, AsyncSnapshot snapshot) {
+                            if (snapshot.data == null) {
+                              print("snapshot is null :O");
+                              return new Scaffold(
+                                backgroundColor: Color(0xff65646a),
+                                body: new Center(
+                                  child: new Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: <Widget>[
+                                      Image.asset("assets/images/image0.png"),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            } else {
+                              print("snapshot is not null");
+                              return Container(
+                                width: deviceWidth * 100,
+                                height: deviceHeight * 135,
+                                child: Row(
+                                  children: <Widget>[
+                                    Container(
+                                      margin: EdgeInsets.fromLTRB(deviceWidth * 1,
+                                          deviceHeight * 1, deviceWidth * 1, deviceHeight * 1),
+                                      //color: Color(0xffebebe8),
+                                      width: deviceWidth * 127,
+                                      height: deviceHeight * 135,
+                                      decoration: BoxDecoration(
+                                        gradient: LinearGradient(
+                                            colors: [Color(0xffebebe8), Color(0xffebebe8)]),
+                                        borderRadius: BorderRadius.circular(6.0),
+                                      ),
+                                      child: ListView.builder(
+                                        itemCount: snapshot.data.length,
+                                        itemBuilder: (BuildContext context, int i) {
+                                          return RichText(
+                                            text: TextSpan(
+                                                style: TextStyle(
+                                                    color: Color(0xffcf4411),
+                                                    fontWeight: FontWeight.bold,
+                                                    height: deviceHeight * 0.2,
+                                                    fontSize: deviceHeight * 2.28),
+                                                children: <TextSpan>[
+                                                  TextSpan(
+                                                    text:  "${snapshot.data[i].courseDept} ",
+                                                    style: TextStyle(
+                                                        color: Colors.black.withOpacity(0.7)),
+                                                  ),
+                                                  TextSpan(
+                                                    text:  "${snapshot.data[i].courseNum}",
+                                                    style: TextStyle(
+                                                        color: Colors.black.withOpacity(0.7)),
+                                                  ),
+                                                  TextSpan(
+                                                    text:  "\n${snapshot.data[i].name}",
+                                                    style: TextStyle(
+                                                        color: Colors.black.withOpacity(0.5)),
+                                                  ),
+                                                  TextSpan(
+                                                    text:  "\n Semester: ${snapshot.data[i].semester}",
+                                                    style: TextStyle(
+                                                        color: Colors.black.withOpacity(1.0)),
+                                                  ),
+                                                  TextSpan(
+                                                    text:  "\n",
+                                                    style: TextStyle(
+                                                        color: Colors.black.withOpacity(1.0)),
+                                                  ),
+                                                  
+                                                ]),
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            }
+                          },
+                        ),
+                    )
+                    
                     
                     
                   ]),
@@ -1498,7 +1586,7 @@ class EditPopUpState extends State<EditPopUp>
           scale: scaleAnimation,
           child: Container(
             width: deviceWidth * 95,
-            height: deviceHeight * 50,
+            height: deviceHeight * 60,
             decoration: ShapeDecoration(
                 color: Colors.white,
                 shape: RoundedRectangleBorder(
@@ -1514,7 +1602,7 @@ class EditPopUpState extends State<EditPopUp>
                         fontSize: deviceHeight * 2.28),
                     children: <TextSpan>[
                       TextSpan(
-                        text: 'Letter Grade:',
+                        text: 'To add a complete course choose a semester, grade, and the status complete. To add a planned course choose a semester and the status incomplete. ',
                         style: TextStyle(color: Colors.black.withOpacity(0.5)),
                         
                       )
@@ -1552,7 +1640,9 @@ class EditPopUpState extends State<EditPopUp>
                         height: deviceHeight * 0.2,
                         fontSize: deviceHeight * 2.28),
                     children: <TextSpan>[
+                      
                       TextSpan(
+                        
                         text: 'Semester:',
                         style: TextStyle(color: Colors.black.withOpacity(0.5)),
                       )
@@ -1667,6 +1757,7 @@ class EditPopUpState extends State<EditPopUp>
                         fontSize: deviceHeight * 2,
                         background: Color(0xffcf4411),
                         onPressed: () async {
+                          await addPlannedCourse();
                           Navigator.pop(context);
                         },
                       ),
@@ -1681,7 +1772,10 @@ class EditPopUpState extends State<EditPopUp>
                         text: "Remove \nPlanned Course",
                         fontSize: deviceHeight * 2,
                         background: Color(0xffcf4411),
-                        onPressed: () async {},
+                        onPressed: () async {
+                          await delPlannedCourse();
+                          Navigator.pop(context);
+                        },
                       ),
                     ),
                   ],
@@ -1710,6 +1804,16 @@ class RoadmapState extends State<Roadmap> {
       _isLoading = true;
     });
     doc = await PDFDocument.fromAsset('assets/images/flowchart.pdf');
+    setState(() {
+      _isLoading = false;
+    });
+  }
+  void flow_chart_loadFromUrl() async {
+    setState(() {
+      _isLoading = true;
+    });
+    doc = await PDFDocument.fromURL(
+        'https://www.utrgv.edu/csci/academics/undergraduate/degreeplan/flowchart.pdf');
     setState(() {
       _isLoading = false;
     });
@@ -1768,7 +1872,7 @@ class RoadmapState extends State<Roadmap> {
                         'Computer Science Flowchart 2020',
                         style: TextStyle(color: Colors.white),
                       ),
-                      onPressed: _loadFromAssets,
+                      onPressed: flow_chart_loadFromUrl,
                     ),
                     TextButton(
                       style: TextButton.styleFrom(
@@ -1923,6 +2027,20 @@ Future<int> addCourse() async {
   return response.statusCode;
 }
 
+Future<int> addPlannedCourse() async {
+  var response = await http.post(
+      "$address/selfadd/PlannedCourses?Semester=${await storage.read(key: "CourseSemester")}&CourseName=${await storage.read(key: "CourseName")}",
+      headers: {
+        HttpHeaders.authorizationHeader:
+            "Bearer ${await storage.read(key: "token")}"
+      });
+  print(
+      "$address/selfadd/PlannedCourses?Semester=${await storage.read(key: "CourseSemester")}&CourseName=${await storage.read(key: "CourseName")}");
+  print(
+      "This is the response status code for addPlannedCourse() = ${response.statusCode}");
+  return response.statusCode;
+}
+
 Future<int> delCourse() async {
   var response = await http.delete(
       "$address/remove/StudentCourse?CourseName=${await storage.read(key: "CourseName")}",
@@ -1932,6 +2050,18 @@ Future<int> delCourse() async {
       });
   print(
       "This is the response status code for delCourse() = ${response.statusCode}");
+  return response.statusCode;
+}
+
+Future<int> delPlannedCourse() async {
+  var response = await http.delete(
+      "$address/remove/PlannedStudentCourse?CourseName=${await storage.read(key: "CourseName")}",
+      headers: {
+        HttpHeaders.authorizationHeader:
+            "Bearer ${await storage.read(key: "token")}"
+      });
+  print(
+      "This is the response status code for delPlannedCourse() = ${response.statusCode}");
   return response.statusCode;
 }
 //gets all the info to add class to the complete tab
@@ -1968,6 +2098,46 @@ Future<List<Course>> _getStudentCourses() async {
   for (var i in data) {
     if (i["Grade"] != "n") {
       Course course = Course(i["CourseID"], i["CourseDept"], i["CourseNum"],
+          i["Name"], i["Intstitution"], i["Grade"], i["Semester"]);
+
+      courses.add(course);
+    }
+  }
+
+  return courses;
+}
+class PlannedCourses {
+  final int courseID;
+  final String courseDept;
+  final int courseNum;
+  final String name;
+  final String institution;
+  final String grade;
+  final String semester;
+  //final bool taken;
+
+  PlannedCourses(this.courseID, this.courseDept, this.courseNum, this.name,
+      this.institution, this.grade, this.semester);
+}
+Future<List<PlannedCourses>> _getPlannedFutureCourses() async {
+  String studentId;
+  studentId = await storage.read(key: "studentId");
+  //this request is on the api side of the app
+  var response = await http.get("$address/PlannedFutureCourses?Email=$studentId",
+      headers: {
+        HttpHeaders.authorizationHeader:
+            "Bearer ${await storage.read(key: "token")}"
+      });
+
+  if (response.statusCode != 200) return null;
+
+  var data = json.decode(response.body);
+
+  List<PlannedCourses> courses = [];
+
+  for (var i in data) {
+    if (i["Semester"] != "n") {
+      PlannedCourses course = PlannedCourses(i["CourseID"], i["CourseDept"], i["CourseNum"],
           i["Name"], i["Intstitution"], i["Grade"], i["Semester"]);
 
       courses.add(course);
