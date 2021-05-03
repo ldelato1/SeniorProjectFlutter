@@ -185,7 +185,7 @@ class _SpecificStudentState extends State<SpecificStudent> {
     double deviceWidth = SizeConfig.blockSizeHorizontal;
     double deviceHeight = SizeConfig.blockSizeVertical;
     return ListView(children: [
-      /////////*****************************************************FRST BOX */
+      ////////////////////Student Info text////////////////
       Container(
         //The First container for STUDENT INFORMATION!
         decoration: BoxDecoration(color: Color(0xff65646a)),
@@ -209,16 +209,80 @@ class _SpecificStudentState extends State<SpecificStudent> {
             } else {
               print("snapshot is not null");
               return Container(
-                width: deviceWidth * 100,
-                height: deviceHeight * 40,
+                width: deviceWidth,
+                height: deviceHeight * 5,
+                child: Row(
+                  children: <Widget>[
+                    Container(
+                      
+                      
+                      
+                      child: (Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            RichText(
+                              text: TextSpan(
+                                style: TextStyle(
+                                    color: Color(0xffcf4411),
+                                    fontWeight: FontWeight.bold,
+                                    height: deviceHeight * 0.2,
+                                    fontSize: deviceHeight * 2.28),
+                                children: <TextSpan>[
+                                  TextSpan(
+                                    text: 'STUDENT INFORMATION:',
+                                    style: TextStyle(
+                                        color: Colors.black.withOpacity(0.5)),
+                                  )
+                                  
+                                ],
+                              ),
+                            ),
+
+                            ///Here
+                          ])),
+                    ),
+                  ],
+                ),
+              );
+            }
+          },
+        ),
+      ),
+      /////////////////////////CONTAINER FOR STUDENT INFORMATION/////////////////////
+      Container(
+        //The First container for STUDENT INFORMATION!
+        decoration: BoxDecoration(color: Color(0xff65646a)),
+        child: FutureBuilder(
+          future: _getUser(),
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if (snapshot.data == null) {
+              print("snapshot is null :O");
+              return new Scaffold(
+                backgroundColor: Color(0xff65646a),
+                body: new Center(
+                  child: new Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Image.asset("assets/images/image0.png"),
+                    ],
+                  ),
+                ),
+              );
+            } else {
+              print("snapshot is not null");
+              return Container(
+                width: deviceWidth * 98,
+                height: deviceHeight * 38,
                 child: Row(
                   children: <Widget>[
                     Container(
                       margin: EdgeInsets.fromLTRB(deviceWidth * 1,
-                          deviceHeight * 4, deviceWidth * 1, deviceHeight * 1),
+                          deviceHeight * 1, deviceWidth * 1, deviceHeight * 1),
                       //color: Color(0xffebebe8),
                       width: deviceWidth * 98,
-                      height: deviceHeight * 35,
+                      height: deviceHeight * 44,
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                             colors: [Color(0xffebebe8), Color(0xffebebe8)]),
@@ -236,6 +300,7 @@ class _SpecificStudentState extends State<SpecificStudent> {
                                     height: deviceHeight * 0.2,
                                     fontSize: deviceHeight * 2.28),
                                 children: <TextSpan>[
+                                  
                                   TextSpan(
                                     text: 'Student Name: ',
                                     style: TextStyle(
@@ -297,16 +362,70 @@ class _SpecificStudentState extends State<SpecificStudent> {
                                     style: TextStyle(
                                         color: Colors.black.withOpacity(1.0)),
                                   ),
+                                ],
+                              ),
+                            ),
+
+                            ///Here
+                          ])),
+                    ),
+                  ],
+                ),
+              );
+            }
+          },
+        ),
+      ),
+      ///////////////////////////PLANNED COURSES TEXT///////////////////////////////
+      Container(
+        //The First container for STUDENT INFORMATION!
+        decoration: BoxDecoration(color: Color(0xff65646a)),
+        child: FutureBuilder(
+          future: _getUser(),
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if (snapshot.data == null) {
+              print("snapshot is null :O");
+              return new Scaffold(
+                backgroundColor: Color(0xff65646a),
+                body: new Center(
+                  child: new Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Image.asset("assets/images/image0.png"),
+                    ],
+                  ),
+                ),
+              );
+            } else {
+              print("snapshot is not null");
+              return Container(
+                width: deviceWidth * 80,
+                height: deviceHeight * 5,
+                child: Row(
+                  children: <Widget>[
+                    Container(
+                      
+                      
+                      
+                      child: (Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            RichText(
+                              text: TextSpan(
+                                style: TextStyle(
+                                    color: Color(0xffcf4411),
+                                    fontWeight: FontWeight.bold,
+                                    height: deviceHeight * 0.2,
+                                    fontSize: deviceHeight * 2.28),
+                                children: <TextSpan>[
                                   TextSpan(
-                                    text: 'Advanced cs Hours  ',
+                                    text: 'PLANNED COURSES:',
                                     style: TextStyle(
                                         color: Colors.black.withOpacity(0.5)),
-                                  ),
-                                  TextSpan(
-                                    text: '${snapshot.data.advancedcshours}\n',
-                                    style: TextStyle(
-                                        color: Colors.black.withOpacity(1.0)),
-                                  ),
+                                  )
+                                  
                                 ],
                               ),
                             ),
@@ -323,7 +442,7 @@ class _SpecificStudentState extends State<SpecificStudent> {
       ),
       //*************************************************************************SECOND BOX */
       Container(
-        //The SECOND CONTAINER FOR PLLANED COURSES
+        /////////////////////////CONTAINER FOR PLLANED COURSES/////////////////////////////////////////////
         decoration: BoxDecoration(color: Color(0xff65646a)),
         child: FutureBuilder(
           future: _getPlannedCourses(),
@@ -344,6 +463,7 @@ class _SpecificStudentState extends State<SpecificStudent> {
               );
             } else {
               print("snapshot is not null");
+              
               return Container(
                 width: deviceWidth * 100,
                 height: deviceHeight * 20,
@@ -371,20 +491,21 @@ class _SpecificStudentState extends State<SpecificStudent> {
                                     height: deviceHeight * 0.2,
                                     fontSize: deviceHeight * 2.28),
                                 children: <TextSpan>[
+  
                                   TextSpan(
                                     text:  "${snapshot.data[i].courseDept} ",
                                     style: TextStyle(
-                                        color: Colors.black.withOpacity(1.0)),
+                                        color: Colors.black.withOpacity(0.7)),
                                   ),
                                   TextSpan(
                                     text:  "${snapshot.data[i].courseNum}",
                                     style: TextStyle(
-                                        color: Colors.black.withOpacity(1.0)),
+                                        color: Colors.black.withOpacity(0.7)),
                                   ),
                                   TextSpan(
                                     text:  "\n${snapshot.data[i].name}\n",
                                     style: TextStyle(
-                                        color: Colors.black.withOpacity(1.0)),
+                                        color: Colors.black.withOpacity(0.5)),
                                   ),
                                 ]),
                           );
@@ -398,9 +519,72 @@ class _SpecificStudentState extends State<SpecificStudent> {
           },
         ),
       ),
-            //*************************************************************************THIRD BOX */
       Container(
-        //The THIRD CONTAINER FOR  COURSES
+        //////////////////////////COMPLETED COURSES TEXT////////////////////////////////
+        decoration: BoxDecoration(color: Color(0xff65646a)),
+        child: FutureBuilder(
+          future: _getUser(),
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if (snapshot.data == null) {
+              print("snapshot is null :O");
+              return new Scaffold(
+                backgroundColor: Color(0xff65646a),
+                body: new Center(
+                  child: new Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Image.asset("assets/images/image0.png"),
+                    ],
+                  ),
+                ),
+              );
+            } else {
+              print("snapshot is not null");
+              return Container(
+                width: deviceWidth * 80,
+                height: deviceHeight * 5,
+                child: Row(
+                  children: <Widget>[
+                    Container(
+                      
+                      
+                      
+                      child: (Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            RichText(
+                              text: TextSpan(
+                                style: TextStyle(
+                                    color: Color(0xffcf4411),
+                                    fontWeight: FontWeight.bold,
+                                    height: deviceHeight * 0.2,
+                                    fontSize: deviceHeight * 2.28),
+                                children: <TextSpan>[
+                                  TextSpan(
+                                    text: 'COMPLETED COURSES:',
+                                    style: TextStyle(
+                                        color: Colors.black.withOpacity(0.5)),
+                                  )
+                                  
+                                ],
+                              ),
+                            ),
+
+                            ///Here
+                          ])),
+                    ),
+                  ],
+                ),
+              );
+            }
+          },
+        ),
+      ),
+            
+      Container(
+        ///////////////////////////COMPLETED COURSES CONTAINER//////////////////////////
         decoration: BoxDecoration(color: Color(0xff65646a)),
         child: FutureBuilder(
           future: _getStudentCourses(),
