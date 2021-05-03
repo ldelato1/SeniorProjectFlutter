@@ -122,7 +122,7 @@ class GPAcalcstate extends State<GPAcalc> {
 
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text("GPA calculator"),
+        title: new Text("Future GPA calculator"),
         backgroundColor: utrgv_orange,
       ),
        backgroundColor: background,
@@ -157,7 +157,7 @@ class GPAcalcstate extends State<GPAcalc> {
           if(safeToNavigate)
           Navigator.of(context).push(
                 new MaterialPageRoute(
-                  builder: (BuildContext context) => new ScorePage(res),
+                  builder: (BuildContext context) => new ScorePage(res,soc,sogxc),
                 ),
               );
           else{
