@@ -23,37 +23,8 @@ class TabBarDemo extends StatefulWidget {
   @override
   _TabBarDemoState createState() => new _TabBarDemoState();
 }
-
 final Set _saved = Set();
-List<bool> checkBox = [
-  false,
-  false,
-  false,
-  false,
-  false,
-  false,
-  false,
-  false,
-  false,
-  false,
-  false,
-  false,
-  false,
-  false,
-  false,
-  false,
-  false,
-  false,
-  false,
-  false,
-  false,
-  false,
-  false,
-  false,
-  false
-];
-bool cb1 = false;
-bool cb2 = false;
+List<bool> checkBox = [false, false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false];
 
 class _TabBarDemoState extends State<TabBarDemo> {
   @override
@@ -61,6 +32,7 @@ class _TabBarDemoState extends State<TabBarDemo> {
     double deviceWidth = 2;
     double deviceHeight = 5;
     return MaterialApp(
+      
       home: DefaultTabController(
         length: 4,
         child: Scaffold(
@@ -81,6 +53,7 @@ class _TabBarDemoState extends State<TabBarDemo> {
               ],
             ),
             title: Text('Degree Audit'),
+            
           ),
           body: TabBarView(
             children: [
@@ -88,6 +61,7 @@ class _TabBarDemoState extends State<TabBarDemo> {
                 children: [
                   Container(
                     //The First container for STUDENT INFORMATION!
+                    //
                     decoration: BoxDecoration(color: Color(0xff65646a)),
                     child: FutureBuilder(
                       future: _getUser(),
@@ -152,7 +126,7 @@ class _TabBarDemoState extends State<TabBarDemo> {
                                                     color: Colors.grey),
                                               ),
                                               TextSpan(
-                                                text: '${snapshot.data.gpa}\n',
+                                                text: '${double.parse((snapshot.data.gpa).toStringAsFixed(2))}\n',
                                                 style: TextStyle(
                                                     color: Colors.white),
                                               ),
@@ -173,8 +147,7 @@ class _TabBarDemoState extends State<TabBarDemo> {
                                                     color: Colors.grey),
                                               ),
                                               TextSpan(
-                                                text:
-                                                    '${snapshot.data.classification}\n',
+                                                text: '${snapshot.data.classification}\n',
                                                 style: TextStyle(
                                                     color: Colors.white),
                                               ),
@@ -184,8 +157,7 @@ class _TabBarDemoState extends State<TabBarDemo> {
                                                     color: Colors.grey),
                                               ),
                                               TextSpan(
-                                                text:
-                                                    '${snapshot.data.hours}\n',
+                                                text: '${snapshot.data.hours}\n',
                                                 style: TextStyle(
                                                     color: Colors.white),
                                               ),
@@ -230,7 +202,7 @@ class _TabBarDemoState extends State<TabBarDemo> {
                                     animation: true,
                                     percent: snapshot.data.hours / 125,
                                     center: new Text(
-                                      "${snapshot.data.hours / 125 * 100}%",
+                                      "${(snapshot.data.hours / 125 * 100).round()}%",
                                       style: new TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 20.0),
@@ -288,29 +260,33 @@ class _TabBarDemoState extends State<TabBarDemo> {
                     ),
                     Card(
                       color: Color(0xffebebe8),
+                      
                       child: CheckboxListTile(
                         //leading: FlutterLogo(size: 56.0),
                         title: Text('Introduction to Computer Science'),
                         subtitle: Text('CSCI 1101'),
-                        controlAffinity: ListTileControlAffinity.trailing,
+                        controlAffinity: 
+                          ListTileControlAffinity.trailing,
                         value: checkBox[0],
                         onChanged: (bool value) async {
-                          setState(() {
+                          setState((){
                             checkBox[0] = value;
+                            
                           });
-                          await storage.write(
-                              key: "CourseName",
-                              value:
-                                  "CSCI 1101 Introduction to Computer Science");
-                          print(await storage.read(key: "CourseName"));
+                            await storage.write(
+                                key: "CourseName",
+                                value: "Introduction to Computer Science");
+                            print(await storage.read(key: "CourseName"));
+                          
+                            showDialog(
+                              context: context,
+                              builder: (_) => EditPopUp(),
+                            );
+                          
 
-                          showDialog(
-                            context: context,
-                            builder: (_) => EditPopUp(),
-                          );
                         },
-                        activeColor: Colors.green,
-                        checkColor: Colors.black,
+                          activeColor: Colors.green,
+                          checkColor: Colors.black,
                       ),
                     ),
                     Card(
@@ -319,25 +295,27 @@ class _TabBarDemoState extends State<TabBarDemo> {
                         //leading: FlutterLogo(size: 56.0),
                         title: Text('Engineering Computer Science I Lab '),
                         subtitle: Text('CSCI 1170'),
-                        controlAffinity: ListTileControlAffinity.trailing,
+                        controlAffinity: 
+                          ListTileControlAffinity.trailing,
                         value: checkBox[1],
                         onChanged: (bool value) async {
-                          setState(() {
+                          setState((){
                             checkBox[1] = value;
                           });
-                          await storage.write(
-                              key: "CourseName",
-                              value:
-                                  "CSCI 1170 Engineering Computer Science I Lab");
-                          print(await storage.read(key: "CourseName"));
+                            await storage.write(
+                                key: "CourseName",
+                                value: "Engineering Computer Science I Lab");
+                            print(await storage.read(key: "CourseName"));
+                          
+                            showDialog(
+                              context: context,
+                              builder: (_) => EditPopUp(),
+                            );
+                          
 
-                          showDialog(
-                            context: context,
-                            builder: (_) => EditPopUp(),
-                          );
                         },
-                        activeColor: Colors.green,
-                        checkColor: Colors.black,
+                          activeColor: Colors.green,
+                          checkColor: Colors.black,
                       ),
                     ),
                     Card(
@@ -346,54 +324,58 @@ class _TabBarDemoState extends State<TabBarDemo> {
                         //leading: FlutterLogo(size: 56.0),
                         title: Text('Engineering Computer Science I'),
                         subtitle: Text('CSCI 1370'),
-                        controlAffinity: ListTileControlAffinity.trailing,
+                        controlAffinity: 
+                          ListTileControlAffinity.trailing,
                         value: checkBox[2],
                         onChanged: (bool value) async {
-                          setState(() {
+                          setState((){
                             checkBox[2] = value;
                           });
-                          await storage.write(
-                              key: "CourseName",
-                              value:
-                                  "CSCI 1370 Engineering Computer Science I");
-                          print(await storage.read(key: "CourseName"));
+                            await storage.write(
+                                key: "CourseName",
+                                value: "Engineering Computer Science I");
+                            print(await storage.read(key: "CourseName"));
+                          
+                            showDialog(
+                              context: context,
+                              builder: (_) => EditPopUp(),
+                            );
+                          
 
-                          showDialog(
-                            context: context,
-                            builder: (_) => EditPopUp(),
-                          );
                         },
-                        activeColor: Colors.green,
-                        checkColor: Colors.black,
+                          activeColor: Colors.green,
+                          checkColor: Colors.black,
                       ),
                     ),
                     Card(
                       color: Color(0xffebebe8),
                       child: CheckboxListTile(
                         //leading: FlutterLogo(size: 56.0),
-                        title:
-                            Text('Computer Organization and Assembly Language'),
+                        title: Text('Computer Organization and Assembly Language'),
                         subtitle: Text('CSCI 2333'),
-                        controlAffinity: ListTileControlAffinity.trailing,
+                        controlAffinity: 
+                          ListTileControlAffinity.trailing,
                         value: checkBox[3],
                         onChanged: (bool value) async {
-                          setState(() {
+                          setState((){
                             checkBox[3] = value;
                           });
-                          await storage.write(
-                              key: "CourseName",
-                              value:
-                                  "CSCI 2333 Computer Organization and Assembly Language");
-                          print(await storage.read(key: "CourseName"));
+                            await storage.write(
+                                key: "CourseName",
+                                value: "Computer Organization and Assembly Language");
+                            print(await storage.read(key: "CourseName"));
+                          
+                            showDialog(
+                              context: context,
+                              builder: (_) => EditPopUp(),
+                            );
+                          
 
-                          showDialog(
-                            context: context,
-                            builder: (_) => EditPopUp(),
-                          );
                         },
-                        activeColor: Colors.green,
-                        checkColor: Colors.black,
+                          activeColor: Colors.green,
+                          checkColor: Colors.black,
                       ),
+                      
                     ),
                     Card(
                       color: Color(0xffebebe8),
@@ -401,25 +383,27 @@ class _TabBarDemoState extends State<TabBarDemo> {
                         //leading: FlutterLogo(size: 56.0),
                         title: Text('Programming in UNIX / Linux Environment'),
                         subtitle: Text('CSCI 2344'),
-                        controlAffinity: ListTileControlAffinity.trailing,
+                        controlAffinity: 
+                          ListTileControlAffinity.trailing,
                         value: checkBox[4],
                         onChanged: (bool value) async {
-                          setState(() {
+                          setState((){
                             checkBox[4] = value;
                           });
-                          await storage.write(
-                              key: "CourseName",
-                              value:
-                                  "CSCI 2344 Programming in UNIX / Linux Environment");
-                          print(await storage.read(key: "CourseName"));
+                            await storage.write(
+                                key: "CourseName",
+                                value: "Programming in UNIX / Linux Environment");
+                            print(await storage.read(key: "CourseName"));
+                          
+                            showDialog(
+                              context: context,
+                              builder: (_) => EditPopUp(),
+                            );
+                          
 
-                          showDialog(
-                            context: context,
-                            builder: (_) => EditPopUp(),
-                          );
                         },
-                        activeColor: Colors.green,
-                        checkColor: Colors.black,
+                          activeColor: Colors.green,
+                          checkColor: Colors.black,
                       ),
                     ),
                     Card(
@@ -428,52 +412,57 @@ class _TabBarDemoState extends State<TabBarDemo> {
                         //leading: FlutterLogo(size: 56.0),
                         title: Text('Computer Science II'),
                         subtitle: Text('CSCI 2380'),
-                        controlAffinity: ListTileControlAffinity.trailing,
+                        controlAffinity: 
+                          ListTileControlAffinity.trailing,
                         value: checkBox[5],
                         onChanged: (bool value) async {
-                          setState(() {
+                          setState((){
                             checkBox[5] = value;
                           });
-                          await storage.write(
-                              key: "CourseName",
-                              value: "CSCI 2380 Computer Science II");
-                          print(await storage.read(key: "CourseName"));
+                            await storage.write(
+                                key: "CourseName",
+                                value: "Computer Science II");
+                            print(await storage.read(key: "CourseName"));
+                          
+                            showDialog(
+                              context: context,
+                              builder: (_) => EditPopUp(),
+                            );
+                          
 
-                          showDialog(
-                            context: context,
-                            builder: (_) => EditPopUp(),
-                          );
                         },
-                        activeColor: Colors.green,
-                        checkColor: Colors.black,
+                          activeColor: Colors.green,
+                          checkColor: Colors.black,
                       ),
+                      
                     ),
                     Card(
                       color: Color(0xffebebe8),
                       child: CheckboxListTile(
                         //leading: FlutterLogo(size: 56.0),
-                        title: Text(
-                            'Mathematical Foundations of Computer Science'),
+                        title: Text('Mathematical Foundations of Computer Science'),
                         subtitle: Text('CSCI 3310'),
-                        controlAffinity: ListTileControlAffinity.trailing,
+                        controlAffinity: 
+                          ListTileControlAffinity.trailing,
                         value: checkBox[6],
                         onChanged: (bool value) async {
-                          setState(() {
+                          setState((){
                             checkBox[6] = value;
                           });
-                          await storage.write(
-                              key: "CourseName",
-                              value:
-                                  "CSCI 3310 Mathematical Foundations of Computer Science");
-                          print(await storage.read(key: "CourseName"));
+                            await storage.write(
+                                key: "CourseName",
+                                value: "Mathematical Foundations of Computer Science");
+                            print(await storage.read(key: "CourseName"));
+                          
+                            showDialog(
+                              context: context,
+                              builder: (_) => EditPopUp(),
+                            );
+                          
 
-                          showDialog(
-                            context: context,
-                            builder: (_) => EditPopUp(),
-                          );
                         },
-                        activeColor: Colors.green,
-                        checkColor: Colors.black,
+                          activeColor: Colors.green,
+                          checkColor: Colors.black,
                       ),
                     ),
                     Card(
@@ -482,25 +471,27 @@ class _TabBarDemoState extends State<TabBarDemo> {
                         //leading: FlutterLogo(size: 56.0),
                         title: Text('Algorithms and Data Structures'),
                         subtitle: Text('CSCI 3333'),
-                        controlAffinity: ListTileControlAffinity.trailing,
+                        controlAffinity: 
+                          ListTileControlAffinity.trailing,
                         value: checkBox[7],
                         onChanged: (bool value) async {
-                          setState(() {
+                          setState((){
                             checkBox[7] = value;
                           });
-                          await storage.write(
-                              key: "CourseName",
-                              value:
-                                  "CSCI 3333 Algorithms and Data Structures");
-                          print(await storage.read(key: "CourseName"));
+                            await storage.write(
+                                key: "CourseName",
+                                value: "Algorithms and Data Structures");
+                            print(await storage.read(key: "CourseName"));
+                          
+                            showDialog(
+                              context: context,
+                              builder: (_) => EditPopUp(),
+                            );
+                          
 
-                          showDialog(
-                            context: context,
-                            builder: (_) => EditPopUp(),
-                          );
                         },
-                        activeColor: Colors.green,
-                        checkColor: Colors.black,
+                          activeColor: Colors.green,
+                          checkColor: Colors.black,
                       ),
                     ),
                     Card(
@@ -509,25 +500,27 @@ class _TabBarDemoState extends State<TabBarDemo> {
                         //leading: FlutterLogo(size: 56.0),
                         title: Text('Organization of Programming Languages'),
                         subtitle: Text('CSCI 3336'),
-                        controlAffinity: ListTileControlAffinity.trailing,
+                        controlAffinity: 
+                          ListTileControlAffinity.trailing,
                         value: checkBox[8],
                         onChanged: (bool value) async {
-                          setState(() {
+                          setState((){
                             checkBox[8] = value;
                           });
-                          await storage.write(
-                              key: "CourseName",
-                              value:
-                                  "CSCI 3336 Organization of Programming Languages");
-                          print(await storage.read(key: "CourseName"));
+                            await storage.write(
+                                key: "CourseName",
+                                value: "Organization of Programming Languages");
+                            print(await storage.read(key: "CourseName"));
+                          
+                            showDialog(
+                              context: context,
+                              builder: (_) => EditPopUp(),
+                            );
+                          
 
-                          showDialog(
-                            context: context,
-                            builder: (_) => EditPopUp(),
-                          );
                         },
-                        activeColor: Colors.green,
-                        checkColor: Colors.black,
+                          activeColor: Colors.green,
+                          checkColor: Colors.black,
                       ),
                     ),
                     Card(
@@ -536,52 +529,56 @@ class _TabBarDemoState extends State<TabBarDemo> {
                         //leading: FlutterLogo(size: 56.0),
                         title: Text('Software Engineering I'),
                         subtitle: Text('CSCI 3340'),
-                        controlAffinity: ListTileControlAffinity.trailing,
+                        controlAffinity: 
+                          ListTileControlAffinity.trailing,
                         value: checkBox[9],
                         onChanged: (bool value) async {
-                          setState(() {
+                          setState((){
                             checkBox[9] = value;
                           });
-                          await storage.write(
-                              key: "CourseName",
-                              value: "CSCI 3340 Software Engineering I");
-                          print(await storage.read(key: "CourseName"));
+                            await storage.write(
+                                key: "CourseName",
+                                value: "Software Engineering I");
+                            print(await storage.read(key: "CourseName"));
+                          
+                            showDialog(
+                              context: context,
+                              builder: (_) => EditPopUp(),
+                            );
+                          
 
-                          showDialog(
-                            context: context,
-                            builder: (_) => EditPopUp(),
-                          );
                         },
-                        activeColor: Colors.green,
-                        checkColor: Colors.black,
+                          activeColor: Colors.green,
+                          checkColor: Colors.black,
                       ),
                     ),
                     Card(
                       color: Color(0xffebebe8),
                       child: CheckboxListTile(
                         //leading: FlutterLogo(size: 56.0),
-                        title: Text(
-                            'Automata, Formal Languages, and Computability'),
+                        title: Text('Automata, Formal Languages, and Computability'),
                         subtitle: Text('CSCI 4325'),
-                        controlAffinity: ListTileControlAffinity.trailing,
+                        controlAffinity: 
+                          ListTileControlAffinity.trailing,
                         value: checkBox[10],
                         onChanged: (bool value) async {
-                          setState(() {
+                          setState((){
                             checkBox[10] = value;
                           });
-                          await storage.write(
-                              key: "CourseName",
-                              value:
-                                  "CSCI 4325 Automata, Formal Languages, and Computability");
-                          print(await storage.read(key: "CourseName"));
+                            await storage.write(
+                                key: "CourseName",
+                                value: "Automata, Formal Languages, and Computability");
+                            print(await storage.read(key: "CourseName"));
+                          
+                            showDialog(
+                              context: context,
+                              builder: (_) => EditPopUp(),
+                            );
+                          
 
-                          showDialog(
-                            context: context,
-                            builder: (_) => EditPopUp(),
-                          );
                         },
-                        activeColor: Colors.green,
-                        checkColor: Colors.black,
+                          activeColor: Colors.green,
+                          checkColor: Colors.black,
                       ),
                     ),
                     Card(
@@ -590,24 +587,27 @@ class _TabBarDemoState extends State<TabBarDemo> {
                         //leading: FlutterLogo(size: 56.0),
                         title: Text('Senior Project'),
                         subtitle: Text('CSCI 4390'),
-                        controlAffinity: ListTileControlAffinity.trailing,
+                        controlAffinity: 
+                          ListTileControlAffinity.trailing,
                         value: checkBox[11],
                         onChanged: (bool value) async {
-                          setState(() {
+                          setState((){
                             checkBox[11] = value;
                           });
-                          await storage.write(
-                              key: "CourseName",
-                              value: "CSCI 4390 Senior Project");
-                          print(await storage.read(key: "CourseName"));
+                            await storage.write(
+                                key: "CourseName",
+                                value: "Senior Project");
+                            print(await storage.read(key: "CourseName"));
+                          
+                            showDialog(
+                              context: context,
+                              builder: (_) => EditPopUp(),
+                            );
+                          
 
-                          showDialog(
-                            context: context,
-                            builder: (_) => EditPopUp(),
-                          );
                         },
-                        activeColor: Colors.green,
-                        checkColor: Colors.black,
+                          activeColor: Colors.green,
+                          checkColor: Colors.black,
                       ),
                     ),
                   ]),
@@ -664,53 +664,56 @@ class _TabBarDemoState extends State<TabBarDemo> {
                         //leading: FlutterLogo(size: 56.0),
                         title: Text('Object Oriented Programming in JAVA'),
                         subtitle: Text('CSCI 3326'),
-                        controlAffinity: ListTileControlAffinity.trailing,
+                        controlAffinity: 
+                          ListTileControlAffinity.trailing,
                         value: checkBox[12],
                         onChanged: (bool value) async {
-                          setState(() {
+                          setState((){
                             checkBox[12] = value;
                           });
-                          await storage.write(
-                              key: "CourseName",
-                              value:
-                                  "CSCI 3326 Object Oriented Programming in JAVA");
-                          print(await storage.read(key: "CourseName"));
+                            await storage.write(
+                                key: "CourseName",
+                                value: "Object Oriented Programming in JAVA");
+                            print(await storage.read(key: "CourseName"));
+                          
+                            showDialog(
+                              context: context,
+                              builder: (_) => EditPopUp(),
+                            );
+                          
 
-                          showDialog(
-                            context: context,
-                            builder: (_) => EditPopUp(),
-                          );
                         },
-                        activeColor: Colors.green,
-                        checkColor: Colors.black,
+                          activeColor: Colors.green,
+                          checkColor: Colors.black,
                       ),
                     ),
                     Card(
                       color: Color(0xffebebe8),
                       child: CheckboxListTile(
                         //leading: FlutterLogo(size: 56.0),
-                        title:
-                            Text('Object Oriented Programming in Visual Basic'),
+                        title: Text('Object Oriented Programming in Visual Basic'),
                         subtitle: Text('CSCI 3327'),
-                        controlAffinity: ListTileControlAffinity.trailing,
+                        controlAffinity: 
+                          ListTileControlAffinity.trailing,
                         value: checkBox[13],
                         onChanged: (bool value) async {
-                          setState(() {
+                          setState((){
                             checkBox[13] = value;
                           });
-                          await storage.write(
-                              key: "CourseName",
-                              value:
-                                  "CSCI 3327 Object Oriented Programming in Visual Basic");
-                          print(await storage.read(key: "CourseName"));
+                            await storage.write(
+                                key: "CourseName",
+                                value: "Object Oriented Programming in Visual Basic");
+                            print(await storage.read(key: "CourseName"));
+                          
+                            showDialog(
+                              context: context,
+                              builder: (_) => EditPopUp(),
+                            );
+                          
 
-                          showDialog(
-                            context: context,
-                            builder: (_) => EditPopUp(),
-                          );
                         },
-                        activeColor: Colors.green,
-                        checkColor: Colors.black,
+                          activeColor: Colors.green,
+                          checkColor: Colors.black,
                       ),
                     ),
                     Card(
@@ -719,25 +722,27 @@ class _TabBarDemoState extends State<TabBarDemo> {
                         //leading: FlutterLogo(size: 56.0),
                         title: Text('Object Oriented Programming in C#'),
                         subtitle: Text('CSCI 3328'),
-                        controlAffinity: ListTileControlAffinity.trailing,
+                        controlAffinity: 
+                          ListTileControlAffinity.trailing,
                         value: checkBox[14],
                         onChanged: (bool value) async {
-                          setState(() {
+                          setState((){
                             checkBox[14] = value;
                           });
-                          await storage.write(
-                              key: "CourseName",
-                              value:
-                                  "CSCI 3328 Object Oriented Programming in C#");
-                          print(await storage.read(key: "CourseName"));
+                            await storage.write(
+                                key: "CourseName",
+                                value: "Object Oriented Programming in C#");
+                            print(await storage.read(key: "CourseName"));
+                          
+                            showDialog(
+                              context: context,
+                              builder: (_) => EditPopUp(),
+                            );
+                          
 
-                          showDialog(
-                            context: context,
-                            builder: (_) => EditPopUp(),
-                          );
                         },
-                        activeColor: Colors.green,
-                        checkColor: Colors.black,
+                          activeColor: Colors.green,
+                          checkColor: Colors.black,
                       ),
                     ),
                     RichText(
@@ -778,25 +783,27 @@ class _TabBarDemoState extends State<TabBarDemo> {
                         //leading: FlutterLogo(size: 56.0),
                         title: Text('Database Design and Implementation'),
                         subtitle: Text('CSCI 4333'),
-                        controlAffinity: ListTileControlAffinity.trailing,
+                        controlAffinity: 
+                          ListTileControlAffinity.trailing,
                         value: checkBox[15],
                         onChanged: (bool value) async {
-                          setState(() {
+                          setState((){
                             checkBox[15] = value;
                           });
-                          await storage.write(
-                              key: "CourseName",
-                              value:
-                                  "CSCI 4333 Database Design and Implementation");
-                          print(await storage.read(key: "CourseName"));
+                            await storage.write(
+                                key: "CourseName",
+                                value: "Database Design and Implementation");
+                            print(await storage.read(key: "CourseName"));
+                          
+                            showDialog(
+                              context: context,
+                              builder: (_) => EditPopUp(),
+                            );
+                          
 
-                          showDialog(
-                            context: context,
-                            builder: (_) => EditPopUp(),
-                          );
                         },
-                        activeColor: Colors.green,
-                        checkColor: Colors.black,
+                          activeColor: Colors.green,
+                          checkColor: Colors.black,
                       ),
                     ),
                     Card(
@@ -805,24 +812,27 @@ class _TabBarDemoState extends State<TabBarDemo> {
                         //leading: FlutterLogo(size: 56.0),
                         title: Text('Operating Systems'),
                         subtitle: Text('CSCI 4334'),
-                        controlAffinity: ListTileControlAffinity.trailing,
+                        controlAffinity: 
+                          ListTileControlAffinity.trailing,
                         value: checkBox[16],
                         onChanged: (bool value) async {
-                          setState(() {
+                          setState((){
                             checkBox[16] = value;
                           });
-                          await storage.write(
-                              key: "CourseName",
-                              value: "CSCI 4334 Operating Systems");
-                          print(await storage.read(key: "CourseName"));
+                            await storage.write(
+                                key: "CourseName",
+                                value: "Operating Systems");
+                            print(await storage.read(key: "CourseName"));
+                          
+                            showDialog(
+                              context: context,
+                              builder: (_) => EditPopUp(),
+                            );
+                          
 
-                          showDialog(
-                            context: context,
-                            builder: (_) => EditPopUp(),
-                          );
                         },
-                        activeColor: Colors.green,
-                        checkColor: Colors.black,
+                          activeColor: Colors.green,
+                          checkColor: Colors.black,
                       ),
                     ),
                     Card(
@@ -831,24 +841,27 @@ class _TabBarDemoState extends State<TabBarDemo> {
                         //leading: FlutterLogo(size: 56.0),
                         title: Text('Computer Architecture'),
                         subtitle: Text('CSCI 4335'),
-                        controlAffinity: ListTileControlAffinity.trailing,
+                        controlAffinity: 
+                          ListTileControlAffinity.trailing,
                         value: checkBox[17],
                         onChanged: (bool value) async {
-                          setState(() {
+                          setState((){
                             checkBox[17] = value;
                           });
-                          await storage.write(
-                              key: "CourseName",
-                              value: "CSCI 4335 Computer Architecture");
-                          print(await storage.read(key: "CourseName"));
+                            await storage.write(
+                                key: "CourseName",
+                                value: "Computer Architecture");
+                            print(await storage.read(key: "CourseName"));
+                          
+                            showDialog(
+                              context: context,
+                              builder: (_) => EditPopUp(),
+                            );
+                          
 
-                          showDialog(
-                            context: context,
-                            builder: (_) => EditPopUp(),
-                          );
                         },
-                        activeColor: Colors.green,
-                        checkColor: Colors.black,
+                          activeColor: Colors.green,
+                          checkColor: Colors.black,
                       ),
                     ),
                     Card(
@@ -857,24 +870,27 @@ class _TabBarDemoState extends State<TabBarDemo> {
                         //leading: FlutterLogo(size: 56.0),
                         title: Text('Computer Networks'),
                         subtitle: Text('CSCI 4345'),
-                        controlAffinity: ListTileControlAffinity.trailing,
+                        controlAffinity: 
+                          ListTileControlAffinity.trailing,
                         value: checkBox[18],
                         onChanged: (bool value) async {
-                          setState(() {
+                          setState((){
                             checkBox[18] = value;
                           });
-                          await storage.write(
-                              key: "CourseName",
-                              value: "CSCI 4345 Computer Networks");
-                          print(await storage.read(key: "CourseName"));
+                            await storage.write(
+                                key: "CourseName",
+                                value: "Computer Networks");
+                            print(await storage.read(key: "CourseName"));
+                          
+                            showDialog(
+                              context: context,
+                              builder: (_) => EditPopUp(),
+                            );
+                          
 
-                          showDialog(
-                            context: context,
-                            builder: (_) => EditPopUp(),
-                          );
                         },
-                        activeColor: Colors.green,
-                        checkColor: Colors.black,
+                          activeColor: Colors.green,
+                          checkColor: Colors.black,
                       ),
                     ),
                     RichText(
@@ -914,24 +930,27 @@ class _TabBarDemoState extends State<TabBarDemo> {
                         //leading: FlutterLogo(size: 56.0),
                         title: Text('Computer Architecture'),
                         subtitle: Text('CSCI 3341'),
-                        controlAffinity: ListTileControlAffinity.trailing,
+                        controlAffinity: 
+                          ListTileControlAffinity.trailing,
                         value: checkBox[19],
                         onChanged: (bool value) async {
-                          setState(() {
+                          setState((){
                             checkBox[19] = value;
                           });
-                          await storage.write(
-                              key: "CourseName",
-                              value: "CSCI 3341 Computer Architecture");
-                          print(await storage.read(key: "CourseName"));
+                            await storage.write(
+                                key: "CourseName",
+                                value: "Computer Architecture");
+                            print(await storage.read(key: "CourseName"));
+                          
+                            showDialog(
+                              context: context,
+                              builder: (_) => EditPopUp(),
+                            );
+                          
 
-                          showDialog(
-                            context: context,
-                            builder: (_) => EditPopUp(),
-                          );
                         },
-                        activeColor: Colors.green,
-                        checkColor: Colors.black,
+                          activeColor: Colors.green,
+                          checkColor: Colors.black,
                       ),
                     ),
                     Card(
@@ -940,25 +959,27 @@ class _TabBarDemoState extends State<TabBarDemo> {
                         //leading: FlutterLogo(size: 56.0),
                         title: Text('Internship in Computer Science'),
                         subtitle: Text('CSCI 3300'),
-                        controlAffinity: ListTileControlAffinity.trailing,
+                        controlAffinity: 
+                          ListTileControlAffinity.trailing,
                         value: checkBox[20],
                         onChanged: (bool value) async {
-                          setState(() {
+                          setState((){
                             checkBox[20] = value;
                           });
-                          await storage.write(
-                              key: "CourseName",
-                              value:
-                                  "CSCI 3300 Internship in Computer Science");
-                          print(await storage.read(key: "CourseName"));
+                            await storage.write(
+                                key: "CourseName",
+                                value: "Internship in Computer Science");
+                            print(await storage.read(key: "CourseName"));
+                          
+                            showDialog(
+                              context: context,
+                              builder: (_) => EditPopUp(),
+                            );
+                          
 
-                          showDialog(
-                            context: context,
-                            builder: (_) => EditPopUp(),
-                          );
                         },
-                        activeColor: Colors.green,
-                        checkColor: Colors.black,
+                          activeColor: Colors.green,
+                          checkColor: Colors.black,
                       ),
                     ),
                     Card(
@@ -967,24 +988,27 @@ class _TabBarDemoState extends State<TabBarDemo> {
                         //leading: FlutterLogo(size: 56.0),
                         title: Text('Internet Programming'),
                         subtitle: Text('CSCI 3342'),
-                        controlAffinity: ListTileControlAffinity.trailing,
+                        controlAffinity: 
+                          ListTileControlAffinity.trailing,
                         value: checkBox[21],
                         onChanged: (bool value) async {
-                          setState(() {
+                          setState((){
                             checkBox[21] = value;
                           });
-                          await storage.write(
-                              key: "CourseName",
-                              value: "CSCI 3342 Internet Programming");
-                          print(await storage.read(key: "CourseName"));
+                            await storage.write(
+                                key: "CourseName",
+                                value: "Internet Programming");
+                            print(await storage.read(key: "CourseName"));
+                          
+                            showDialog(
+                              context: context,
+                              builder: (_) => EditPopUp(),
+                            );
+                          
 
-                          showDialog(
-                            context: context,
-                            builder: (_) => EditPopUp(),
-                          );
                         },
-                        activeColor: Colors.green,
-                        checkColor: Colors.black,
+                          activeColor: Colors.green,
+                          checkColor: Colors.black,
                       ),
                     )
                   ]),
@@ -1010,24 +1034,27 @@ class _TabBarDemoState extends State<TabBarDemo> {
                         //leading: FlutterLogo(size: 56.0),
                         title: Text('Digital Systems Engineering I'),
                         subtitle: Text('ELEE 2380'),
-                        controlAffinity: ListTileControlAffinity.trailing,
+                        controlAffinity: 
+                          ListTileControlAffinity.trailing,
                         value: checkBox[22],
                         onChanged: (bool value) async {
-                          setState(() {
+                          setState((){
                             checkBox[22] = value;
                           });
-                          await storage.write(
-                              key: "CourseName",
-                              value: "EELE 2330 Digital Systems Engineering I");
-                          print(await storage.read(key: "CourseName"));
+                            await storage.write(
+                                key: "CourseName",
+                                value: "Digital Systems Engineering I");
+                            print(await storage.read(key: "CourseName"));
+                          
+                            showDialog(
+                              context: context,
+                              builder: (_) => EditPopUp(),
+                            );
+                          
 
-                          showDialog(
-                            context: context,
-                            builder: (_) => EditPopUp(),
-                          );
                         },
-                        activeColor: Colors.green,
-                        checkColor: Colors.black,
+                          activeColor: Colors.green,
+                          checkColor: Colors.black,
                       ),
                     ),
                   ]),
@@ -1053,24 +1080,27 @@ class _TabBarDemoState extends State<TabBarDemo> {
                         //leading: FlutterLogo(size: 56.0),
                         title: Text('Technical Communication'),
                         subtitle: Text('ENGL 3342'),
-                        controlAffinity: ListTileControlAffinity.trailing,
+                        controlAffinity: 
+                          ListTileControlAffinity.trailing,
                         value: checkBox[23],
                         onChanged: (bool value) async {
-                          setState(() {
+                          setState((){
                             checkBox[23] = value;
                           });
-                          await storage.write(
-                              key: "CourseName",
-                              value: "ENGL 3342 Technical Communication");
-                          print(await storage.read(key: "CourseName"));
+                            await storage.write(
+                                key: "CourseName",
+                                value: "Technical Communication");
+                            print(await storage.read(key: "CourseName"));
+                          
+                            showDialog(
+                              context: context,
+                              builder: (_) => EditPopUp(),
+                            );
+                          
 
-                          showDialog(
-                            context: context,
-                            builder: (_) => EditPopUp(),
-                          );
                         },
-                        activeColor: Colors.green,
-                        checkColor: Colors.black,
+                          activeColor: Colors.green,
+                          checkColor: Colors.black,
                       ),
                     ),
                     Card(
@@ -1079,25 +1109,27 @@ class _TabBarDemoState extends State<TabBarDemo> {
                         //leading: FlutterLogo(size: 56.0),
                         title: Text('Digital Systems Engineering I Lab'),
                         subtitle: Text('ELEE 2130'),
-                        controlAffinity: ListTileControlAffinity.trailing,
+                        controlAffinity: 
+                          ListTileControlAffinity.trailing,
                         value: checkBox[24],
                         onChanged: (bool value) async {
-                          setState(() {
+                          setState((){
                             checkBox[24] = value;
                           });
-                          await storage.write(
-                              key: "CourseName",
-                              value:
-                                  "ELEE 2130 Digital Systems Engineering I Lab");
-                          print(await storage.read(key: "CourseName"));
+                            await storage.write(
+                                key: "CourseName",
+                                value: "Digital Systems Engineering I Lab");
+                            print(await storage.read(key: "CourseName"));
+                          
+                            showDialog(
+                              context: context,
+                              builder: (_) => EditPopUp(),
+                            );
+                          
 
-                          showDialog(
-                            context: context,
-                            builder: (_) => EditPopUp(),
-                          );
                         },
-                        activeColor: Colors.green,
-                        checkColor: Colors.black,
+                          activeColor: Colors.green,
+                          checkColor: Colors.black,
                       ),
                     ),
                   ]),
@@ -1117,109 +1149,93 @@ class _TabBarDemoState extends State<TabBarDemo> {
                                     color: Colors.white)),
                           ]),
                     ),
-                    //////////////////Container for Complete Courses////////////////////////////
-                    ///All the classes that are being added will show up here
+                     //////////////////Container for Complete Courses////////////////////////////
+                     ///All the classes that are being added will show up here
                     Container(
-                      decoration: BoxDecoration(color: Color(0xff65646a)),
-                      child: FutureBuilder(
-                        future: _getStudentCourses(),
-                        builder:
-                            (BuildContext context, AsyncSnapshot snapshot) {
-                          if (snapshot.data == null) {
-                            print("snapshot is null :O");
-                            return new Scaffold(
-                              backgroundColor: Color(0xff65646a),
-                              body: new Center(
-                                child: new Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                      
+                        decoration: BoxDecoration(color: Color(0xff65646a)),
+                        child: FutureBuilder(
+                          future: _getStudentCourses(),
+                          builder: (BuildContext context, AsyncSnapshot snapshot) {
+                            if (snapshot.data == null) {
+                              print("snapshot is null :O");
+                              return new Scaffold(
+                                backgroundColor: Color(0xff65646a),
+                                body: new Center(
+                                  child: new Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: <Widget>[
+                                      Image.asset("assets/images/image0.png"),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            } else {
+                              print("snapshot is not null");
+                              return Container(
+                                width: deviceWidth * 100,
+                                height: deviceHeight * 135,
+                                child: Row(
                                   children: <Widget>[
-                                    Image.asset("assets/images/image0.png"),
+                                    Container(
+                                      margin: EdgeInsets.fromLTRB(deviceWidth * 1,
+                                          deviceHeight * 1, deviceWidth * 1, deviceHeight * 1),
+                                      //color: Color(0xffebebe8),
+                                      width: deviceWidth * 127,
+                                      height: deviceHeight * 135,
+                                      decoration: BoxDecoration(
+                                        gradient: LinearGradient(
+                                            colors: [Color(0xffebebe8), Color(0xffebebe8)]),
+                                        borderRadius: BorderRadius.circular(6.0),
+                                      ),
+                                      child: ListView.builder(
+                                        itemCount: snapshot.data.length,
+                                        itemBuilder: (BuildContext context, int i) {
+                                          return RichText(
+                                            text: TextSpan(
+                                                style: TextStyle(
+                                                    color: Color(0xffcf4411),
+                                                    fontWeight: FontWeight.bold,
+                                                    height: deviceHeight * 0.2,
+                                                    fontSize: deviceHeight * 2.28),
+                                                children: <TextSpan>[
+                                                  TextSpan(
+                                                    text:  "${snapshot.data[i].courseDept} ",
+                                                    style: TextStyle(
+                                                        color: Colors.black.withOpacity(0.7)),
+                                                  ),
+                                                  TextSpan(
+                                                    text:  "${snapshot.data[i].courseNum}",
+                                                    style: TextStyle(
+                                                        color: Colors.black.withOpacity(0.7)),
+                                                  ),
+                                                  TextSpan(
+                                                    text:  "\n${snapshot.data[i].name}",
+                                                    style: TextStyle(
+                                                        color: Colors.black.withOpacity(0.5)),
+                                                  ),
+                                                  TextSpan(
+                                                    text:  "\n Grade: ${snapshot.data[i].grade}  Semester: ${snapshot.data[i].semester}",
+                                                    style: TextStyle(
+                                                        color: Colors.black.withOpacity(1.0)),
+                                                  ),
+                                                  TextSpan(
+                                                    text:  "\n",
+                                                    style: TextStyle(
+                                                        color: Colors.black.withOpacity(1.0)),
+                                                  ),
+                                                ]),
+                                          );
+                                        },
+                                      ),
+                                    ),
                                   ],
                                 ),
-                              ),
-                            );
-                          } else {
-                            print("snapshot is not null");
-                            return Container(
-                              width: deviceWidth * 100,
-                              height: deviceHeight * 135,
-                              child: Row(
-                                children: <Widget>[
-                                  Container(
-                                    margin: EdgeInsets.fromLTRB(
-                                        deviceWidth * 1,
-                                        deviceHeight * 1,
-                                        deviceWidth * 1,
-                                        deviceHeight * 1),
-                                    //color: Color(0xffebebe8),
-                                    width: deviceWidth * 127,
-                                    height: deviceHeight * 135,
-                                    decoration: BoxDecoration(
-                                      gradient: LinearGradient(colors: [
-                                        Color(0xffebebe8),
-                                        Color(0xffebebe8)
-                                      ]),
-                                      borderRadius: BorderRadius.circular(6.0),
-                                    ),
-                                    child: ListView.builder(
-                                      itemCount: snapshot.data.length,
-                                      itemBuilder:
-                                          (BuildContext context, int i) {
-                                        return RichText(
-                                          text: TextSpan(
-                                              style: TextStyle(
-                                                  color: Color(0xffcf4411),
-                                                  fontWeight: FontWeight.bold,
-                                                  height: deviceHeight * 0.2,
-                                                  fontSize:
-                                                      deviceHeight * 2.28),
-                                              children: <TextSpan>[
-                                                TextSpan(
-                                                  text:
-                                                      "${snapshot.data[i].courseDept} ",
-                                                  style: TextStyle(
-                                                      color: Colors.black
-                                                          .withOpacity(0.7)),
-                                                ),
-                                                TextSpan(
-                                                  text:
-                                                      "${snapshot.data[i].courseNum}",
-                                                  style: TextStyle(
-                                                      color: Colors.black
-                                                          .withOpacity(0.7)),
-                                                ),
-                                                TextSpan(
-                                                  text:
-                                                      "\n${snapshot.data[i].name}",
-                                                  style: TextStyle(
-                                                      color: Colors.black
-                                                          .withOpacity(0.5)),
-                                                ),
-                                                TextSpan(
-                                                  text:
-                                                      "\n Grade: ${snapshot.data[i].grade}  Semester: ${snapshot.data[i].semester}",
-                                                  style: TextStyle(
-                                                      color: Colors.black
-                                                          .withOpacity(1.0)),
-                                                ),
-                                                TextSpan(
-                                                  text: "\n",
-                                                  style: TextStyle(
-                                                      color: Colors.black
-                                                          .withOpacity(1.0)),
-                                                ),
-                                              ]),
-                                        );
-                                      },
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            );
-                          }
-                        },
-                      ),
+                              );
+                            }
+                          },
+                        ),
                     )
                   ]),
                   ListView(children: [
@@ -1238,10 +1254,100 @@ class _TabBarDemoState extends State<TabBarDemo> {
                                     color: Colors.white)),
                           ]),
                     ),
+                    Container(
+                                      
+                        decoration: BoxDecoration(color: Color(0xff65646a)),
+                        child: FutureBuilder(
+                          future: _getPlannedFutureCourses(),
+                          builder: (BuildContext context, AsyncSnapshot snapshot) {
+                            if (snapshot.data == null) {
+                              print("snapshot is null :O");
+                              return new Scaffold(
+                                backgroundColor: Color(0xff65646a),
+                                body: new Center(
+                                  child: new Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: <Widget>[
+                                      Image.asset("assets/images/image0.png"),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            } else {
+                              print("snapshot is not null");
+                              return Container(
+                                width: deviceWidth * 100,
+                                height: deviceHeight * 135,
+                                child: Row(
+                                  children: <Widget>[
+                                    Container(
+                                      margin: EdgeInsets.fromLTRB(deviceWidth * 1,
+                                          deviceHeight * 1, deviceWidth * 1, deviceHeight * 1),
+                                      //color: Color(0xffebebe8),
+                                      width: deviceWidth * 127,
+                                      height: deviceHeight * 135,
+                                      decoration: BoxDecoration(
+                                        gradient: LinearGradient(
+                                            colors: [Color(0xffebebe8), Color(0xffebebe8)]),
+                                        borderRadius: BorderRadius.circular(6.0),
+                                      ),
+                                      child: ListView.builder(
+                                        itemCount: snapshot.data.length,
+                                        itemBuilder: (BuildContext context, int i) {
+                                          return RichText(
+                                            text: TextSpan(
+                                                style: TextStyle(
+                                                    color: Color(0xffcf4411),
+                                                    fontWeight: FontWeight.bold,
+                                                    height: deviceHeight * 0.2,
+                                                    fontSize: deviceHeight * 2.28),
+                                                children: <TextSpan>[
+                                                  TextSpan(
+                                                    text:  "${snapshot.data[i].courseDept} ",
+                                                    style: TextStyle(
+                                                        color: Colors.black.withOpacity(0.7)),
+                                                  ),
+                                                  TextSpan(
+                                                    text:  "${snapshot.data[i].courseNum}",
+                                                    style: TextStyle(
+                                                        color: Colors.black.withOpacity(0.7)),
+                                                  ),
+                                                  TextSpan(
+                                                    text:  "\n${snapshot.data[i].name}",
+                                                    style: TextStyle(
+                                                        color: Colors.black.withOpacity(0.5)),
+                                                  ),
+                                                  TextSpan(
+                                                    text:  "\n Semester: ${snapshot.data[i].semester}",
+                                                    style: TextStyle(
+                                                        color: Colors.black.withOpacity(1.0)),
+                                                  ),
+                                                  TextSpan(
+                                                    text:  "\n",
+                                                    style: TextStyle(
+                                                        color: Colors.black.withOpacity(1.0)),
+                                                  ),
+                                                  
+                                                ]),
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            }
+                          },
+                        ),
+                    )
+                    
+                    
+                    
                   ]),
                 ],
               ),
-              ListView(
+                 ListView(
                 children: <Widget>[
                   ListTile(
                     title: Text('Road Map to graduation'),
@@ -1475,7 +1581,7 @@ class EditPopUpState extends State<EditPopUp>
     String dropdownValueForGrade = 'A';
     String dropDownValueForSemester = "Fall";
     String newValueForGrade = 'null';
-    String dropdownValueForCompleteness = 'Incomplete';
+    String dropdownValueForCompleteness ='Incomplete';
     return Center(
       child: Material(
         color: Colors.transparent,
@@ -1483,7 +1589,7 @@ class EditPopUpState extends State<EditPopUp>
           scale: scaleAnimation,
           child: Container(
             width: deviceWidth * 95,
-            height: deviceHeight * 50,
+            height: deviceHeight * 60,
             decoration: ShapeDecoration(
                 color: Colors.white,
                 shape: RoundedRectangleBorder(
@@ -1499,8 +1605,9 @@ class EditPopUpState extends State<EditPopUp>
                         fontSize: deviceHeight * 2.28),
                     children: <TextSpan>[
                       TextSpan(
-                        text: 'Letter Grade:',
+                        text: 'To add a complete course choose a semester, grade, and the status complete. To add a planned course choose a semester and the status incomplete. ',
                         style: TextStyle(color: Colors.black.withOpacity(0.5)),
+                        
                       )
                     ],
                   ),
@@ -1536,7 +1643,9 @@ class EditPopUpState extends State<EditPopUp>
                         height: deviceHeight * 0.2,
                         fontSize: deviceHeight * 2.28),
                     children: <TextSpan>[
+                      
                       TextSpan(
+                        
                         text: 'Semester:',
                         style: TextStyle(color: Colors.black.withOpacity(0.5)),
                       )
@@ -1590,8 +1699,7 @@ class EditPopUpState extends State<EditPopUp>
                     setState(() async {
                       dropdownValueForCompleteness = newValueForCompleteness;
                       await storage.write(
-                          key: "CourseCompleteness",
-                          value: "$newValueForCompleteness");
+                          key: "CourseCompleteness", value: "$newValueForCompleteness");
                       print(await storage.read(key: "CourseCompleteness"));
                     });
                   },
@@ -1652,6 +1760,7 @@ class EditPopUpState extends State<EditPopUp>
                         fontSize: deviceHeight * 2,
                         background: Color(0xffcf4411),
                         onPressed: () async {
+                          await addPlannedCourse();
                           Navigator.pop(context);
                         },
                       ),
@@ -1666,7 +1775,10 @@ class EditPopUpState extends State<EditPopUp>
                         text: "Remove \nPlanned Course",
                         fontSize: deviceHeight * 2,
                         background: Color(0xffcf4411),
-                        onPressed: () async {},
+                        onPressed: () async {
+                          await delPlannedCourse();
+                          Navigator.pop(context);
+                        },
                       ),
                     ),
                   ],
@@ -1679,7 +1791,6 @@ class EditPopUpState extends State<EditPopUp>
     );
   }
 }
-
 class Roadmap extends StatefulWidget {
   //  Roadmap({Key key, this.title}) : super(key: key);
   // final String title;
@@ -1696,6 +1807,16 @@ class RoadmapState extends State<Roadmap> {
       _isLoading = true;
     });
     doc = await PDFDocument.fromAsset('assets/images/flowchart.pdf');
+    setState(() {
+      _isLoading = false;
+    });
+  }
+  void flow_chart_loadFromUrl() async {
+    setState(() {
+      _isLoading = true;
+    });
+    doc = await PDFDocument.fromURL(
+        'https://www.utrgv.edu/csci/academics/undergraduate/degreeplan/flowchart.pdf');
     setState(() {
       _isLoading = false;
     });
@@ -1725,42 +1846,51 @@ class RoadmapState extends State<Roadmap> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: background,
-      ),
-      body: Center(
+        appBar: AppBar(
+          backgroundColor: background,
+          
+        ),
+        
+            body: Center(
         child: Column(
+         
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Flexible(
+              
               flex: 8,
+              
               child: _isLoading
-                  ? CircularProgressIndicator(
-                      valueColor:
-                          new AlwaysStoppedAnimation<Color>(Colors.white))
+                 ? CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(Colors.white))
                   : PDFViewer(
                       document: doc,
                     ),
             ),
             Flexible(
               flex: 3,
+            
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
+              
                 child: ListView(
-                  /// mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              
+                 /// mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    TextButton(
-                      style:
-                          TextButton.styleFrom(backgroundColor: utrgv_orange),
+                    
+                     TextButton(
+                      style: TextButton.styleFrom(
+                      backgroundColor: utrgv_orange
+                       ),
                       child: Text(
                         'Computer Science Flowchart 2020',
                         style: TextStyle(color: Colors.white),
                       ),
-                      onPressed: _loadFromAssets,
+                      onPressed: flow_chart_loadFromUrl,
                     ),
                     TextButton(
-                      style:
-                          TextButton.styleFrom(backgroundColor: utrgv_orange),
+                      style: TextButton.styleFrom(
+                      backgroundColor: utrgv_orange
+                       ),
                       child: Text(
                         'Computer Science Roadmap 2020',
                         style: TextStyle(color: Colors.white),
@@ -1776,6 +1906,7 @@ class RoadmapState extends State<Roadmap> {
                       ),
                       onPressed: _loadFromUrl2,
                     ),
+                   
                   ],
                 ),
               ),
@@ -1786,12 +1917,11 @@ class RoadmapState extends State<Roadmap> {
     );
   }
 }
-
 class Contact extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final title = 'Contact';
-
+    
     return MaterialApp(
       title: title,
       home: Scaffold(
@@ -1801,6 +1931,7 @@ class Contact extends StatelessWidget {
         ),
         body: ListView(
           children: <Widget>[
+            
             ListTile(
               leading: Icon(Icons.phone),
               title: Text('Phone'),
@@ -1810,7 +1941,6 @@ class Contact extends StatelessWidget {
               leading: Icon(Icons.email),
               title: Text('Email'),
               subtitle: Text('Email: csci@utrgv.edu'),
-              
             ),
           ],
         ),
@@ -1819,11 +1949,11 @@ class Contact extends StatelessWidget {
   }
 }
 
+
 class GPA extends StatefulWidget {
   @override
   GPAState createState() => new GPAState();
 }
-
 class GPAState extends State<GPA> {
   TextEditingController controller = new TextEditingController();
   int n;
@@ -1929,7 +2059,6 @@ class GPAState extends State<GPA> {
       ),
     );
   }
-
   Future<Null> alert() async {
     return showDialog<Null>(
       context: context,
@@ -1958,10 +2087,6 @@ class GPAState extends State<GPA> {
     );
   }
 }
-
-
-
-
 Future<int> addCourse() async {
   var response = await http.post(
       "$address/selfadd/StudentCourses?Semester=${await storage.read(key: "CourseSemester")}&Grade=${await storage.read(key: "CourseGrade")}&CourseCompleteness=${await storage.read(key: "CourseCompleteness")}&CourseName=${await storage.read(key: "CourseName")}",
@@ -1973,6 +2098,20 @@ Future<int> addCourse() async {
       "$address/selfadd/StudentCourses?Semester=${await storage.read(key: "CourseSemester")}&Grade=${await storage.read(key: "CourseGrade")}&CourseCompleteness=${await storage.read(key: "CourseCompleteness")}&CourseName=${await storage.read(key: "CourseName")}");
   print(
       "This is the response status code for addCourse() = ${response.statusCode}");
+  return response.statusCode;
+}
+
+Future<int> addPlannedCourse() async {
+  var response = await http.post(
+      "$address/selfadd/PlannedCourses?Semester=${await storage.read(key: "CourseSemester")}&CourseName=${await storage.read(key: "CourseName")}",
+      headers: {
+        HttpHeaders.authorizationHeader:
+            "Bearer ${await storage.read(key: "token")}"
+      });
+  print(
+      "$address/selfadd/PlannedCourses?Semester=${await storage.read(key: "CourseSemester")}&CourseName=${await storage.read(key: "CourseName")}");
+  print(
+      "This is the response status code for addPlannedCourse() = ${response.statusCode}");
   return response.statusCode;
 }
 
@@ -1988,6 +2127,17 @@ Future<int> delCourse() async {
   return response.statusCode;
 }
 
+Future<int> delPlannedCourse() async {
+  var response = await http.delete(
+      "$address/remove/PlannedStudentCourse?CourseName=${await storage.read(key: "CourseName")}",
+      headers: {
+        HttpHeaders.authorizationHeader:
+            "Bearer ${await storage.read(key: "token")}"
+      });
+  print(
+      "This is the response status code for delPlannedCourse() = ${response.statusCode}");
+  return response.statusCode;
+}
 //gets all the info to add class to the complete tab
 class Course {
   final int courseID;
@@ -2002,7 +2152,6 @@ class Course {
   Course(this.courseID, this.courseDept, this.courseNum, this.name,
       this.institution, this.grade, this.semester);
 }
-
 //gets the student courses
 Future<List<Course>> _getStudentCourses() async {
   String studentId;
@@ -2023,6 +2172,46 @@ Future<List<Course>> _getStudentCourses() async {
   for (var i in data) {
     if (i["Grade"] != "n") {
       Course course = Course(i["CourseID"], i["CourseDept"], i["CourseNum"],
+          i["Name"], i["Intstitution"], i["Grade"], i["Semester"]);
+
+      courses.add(course);
+    }
+  }
+
+  return courses;
+}
+class PlannedCourses {
+  final int courseID;
+  final String courseDept;
+  final int courseNum;
+  final String name;
+  final String institution;
+  final String grade;
+  final String semester;
+  //final bool taken;
+
+  PlannedCourses(this.courseID, this.courseDept, this.courseNum, this.name,
+      this.institution, this.grade, this.semester);
+}
+Future<List<PlannedCourses>> _getPlannedFutureCourses() async {
+  String studentId;
+  studentId = await storage.read(key: "studentId");
+  //this request is on the api side of the app
+  var response = await http.get("$address/PlannedFutureCourses?Email=$studentId",
+      headers: {
+        HttpHeaders.authorizationHeader:
+            "Bearer ${await storage.read(key: "token")}"
+      });
+
+  if (response.statusCode != 200) return null;
+
+  var data = json.decode(response.body);
+
+  List<PlannedCourses> courses = [];
+
+  for (var i in data) {
+    if (i["Semester"] != "n") {
+      PlannedCourses course = PlannedCourses(i["CourseID"], i["CourseDept"], i["CourseNum"],
           i["Name"], i["Intstitution"], i["Grade"], i["Semester"]);
 
       courses.add(course);
